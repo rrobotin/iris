@@ -44,7 +44,7 @@ class Test(BaseTest):
         assert_true(self, second_label_exists, 'Second link exists')
         right_click(second_label_pattern)
         if Settings.is_linux():
-            time.sleep(2)
+            time.sleep(DEFAULT_UI_DELAY)
             type('t')
         else:
             type(Key.DOWN)
@@ -57,6 +57,8 @@ class Test(BaseTest):
 
         right_click(blocked_media_icon_pattern)
         type('p')
+
+        time.sleep(DEFAULT_UI_DELAY)
 
         right_click(blocked_media_icon_pattern)
         type('p')
