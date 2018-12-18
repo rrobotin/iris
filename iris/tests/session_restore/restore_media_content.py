@@ -31,7 +31,7 @@ class Test(BaseTest):
 
         right_click(first_label_pattern)
         if Settings.is_linux():
-            time.sleep(2)
+            time.sleep(DEFAULT_UI_DELAY_LONG)
             type('t')
         else:
             type(Key.DOWN)
@@ -42,6 +42,7 @@ class Test(BaseTest):
 
         second_label_exists = exists(second_label_pattern, 5)
         assert_true(self, second_label_exists, 'Second link exists')
+
         right_click(second_label_pattern)
         if Settings.is_linux():
             time.sleep(DEFAULT_UI_DELAY)
@@ -52,6 +53,7 @@ class Test(BaseTest):
 
         new_tab()
         navigate('https://videos.cdn.mozilla.net/uploads/Web_Developer_Tools_in_Firefox_Aurora_10.webm')
+
         speaker_icon_active_exists = exists(speaker_icon_active_pattern, 10)
         assert_true(self, speaker_icon_active_exists, 'Third website loaded')
 
@@ -76,10 +78,7 @@ class Test(BaseTest):
         last_tab_restored = exists(web_developer_tools_tab_pattern, 5)
         blocked_media_icon_exists = exists(double_icons, 10)
         no_speaker_tabs = exists(speaker_icon_active_pattern, 2)
-
-        assert_true(self, last_tab_restored and blocked_media_icon_exists and (not no_speaker_tabs), 'Tabs are loaded '
-                                                                                                     'and media '
-                                                                                                     'blocked for all '
-                                                                                                     'tabs')
+        restore_session_check_result = last_tab_restored and blocked_media_icon_exists and (not no_speaker_tabs)
+        assert_true(self, restore_session_check_result, 'Tabs are loaded and media blocked for all tabs')
 
 
