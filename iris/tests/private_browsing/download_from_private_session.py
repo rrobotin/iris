@@ -15,6 +15,17 @@ class Test(BaseTest):
         self.test_suite_id = '1826'
         self.locales = ['en-US']
 
+    def setup(self):
+        BaseTest.setup(self)
+        self.set_profile_pref({'browser.download.dir': IrisCore.get_downloads_dir()})
+        self.set_profile_pref({'browser.download.folderList': 2})
+        self.set_profile_pref({'browser.download.useDownloadDir': True})
+        downloads_cleanup()
+
+    def teardown(self):
+        BaseTest.teardown(self)
+        downloads_cleanup()
+
     def run(self):
         private_browsing_icon_pattern = Pattern('private_browsing_icon.png')
         save_file_radiobutton_pattern = Pattern('save_file_radiobutton.png')

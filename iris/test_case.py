@@ -9,6 +9,7 @@ from asserts import *
 from configuration.config_parser import *
 from iris.api.core.util.update_rules import *
 from iris.test_rail.test_case_results import TestRailTests
+from iris.test_dependencies import *
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +34,7 @@ class BaseTest(object):
         self.tags = ''
         self.test_case_id = ''
         self.test_suite_id = ''
-        self.blocked_by = ''
+        self.blocked_by = {'id': '', 'platform': []}
         self.firefox_runner = None
         self.browser = None
         self.base_local_web_url = ''
@@ -52,7 +53,8 @@ class BaseTest(object):
 
     def create_collection_test_rail_result(self):
         """Returns the test rail object."""
-        test_rail_object = TestRailTests(self.meta, self.test_suite_id, self.blocked_by, self.test_case_id,
+        blocked_by = self.blocked_by['id'] if all(k in self.blocked_by for k in ("id", "platform")) else ''
+        test_rail_object = TestRailTests(self.meta, self.test_suite_id, blocked_by, self.test_case_id,
                                          self.results)
         return test_rail_object
 
