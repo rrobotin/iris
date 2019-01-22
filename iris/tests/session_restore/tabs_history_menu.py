@@ -20,64 +20,57 @@ class Test(BaseTest):
                      LocalWeb.FOCUS_TEST_SITE_2, LocalWeb.MOZILLA_TEST_SITE, LocalWeb.POCKET_TEST_SITE]
         website_image_pattern = [LocalWeb.FIREFOX_LOGO, LocalWeb.FIREFOX_LOGO, LocalWeb.FOCUS_LOGO,
                                  LocalWeb.FOCUS_LOGO, LocalWeb.MOZILLA_LOGO, LocalWeb.POCKET_LOGO]
-        history_menu_bar_pattern = Pattern('history_menu_bar.png')
         recently_closed_pattern = Pattern('recently_closed_tabs.png')
+        history_menu_bar_pattern = Pattern('history_menu_bar.png')
         tabs_list_pattern = Pattern('tabs_list.png')
         restore_tabs_pattern = Pattern('restore_all_tabs_button.png')
 
         for index in range(6):
             new_tab()
             navigate(local_url[index])
-            website_loaded = exists(website_image_pattern[index], 20)
-            assert_true(self, website_loaded,
-                        'Website {0} loaded'
-                        .format(index+1))
+            website_loaded = exists(website_image_pattern[index], DEFAULT_SITE_LOAD_TIMEOUT)
+            assert_true(self, website_loaded, 'Website {0} loaded'.format(index + 1))
 
         [close_tab() for _ in range(5)]
 
-        one_tab_exists = exists(website_image_pattern[0], 20)
-        assert_true(self, one_tab_exists,
-                    'One opened tab left. '
-                    'All 5 tabs were successfully closed.')
+        one_tab_exists = exists(website_image_pattern[0], DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, one_tab_exists, 'One opened tab left. All 5 tabs were successfully closed.')
 
         # show menu bar
         key_down(Key.ALT)
-        time.sleep(DEFAULT_UI_DELAY) # time sleep for Linux
+        time.sleep(DEFAULT_UI_DELAY)  # time sleep for Linux dashboard
         key_up(Key.ALT)
 
-        if Settings.get_os() == Platform.MAC:  # menu bar background may have transparency on MAC
-            type(Key.F2, KeyModifier.CTRL)
+        if Settings.get_os() == Platform.MAC:   # Selecting history menu from top menu
+            type(Key.F2, KeyModifier.CTRL)      # menu bar background may have transparency on MAC
             [type(Key.RIGHT) for tab_index in range(5)]
             type(Key.ENTER)
         else:
-            history_menu_bar_exists = exists(history_menu_bar_pattern, 20)
-            assert_true(self, history_menu_bar_exists,
-                        'History menu bar is visible.')
-            click(history_menu_bar_pattern, 0.2)
+            history_menu_bar_exists = exists(history_menu_bar_pattern, DEFAULT_FIREFOX_TIMEOUT)
+            assert_true(self, history_menu_bar_exists, 'History menu bar is visible.')
+            click(history_menu_bar_pattern)
 
-        recently_closed_menu = exists(recently_closed_pattern, 20)
-        assert_true(self, recently_closed_menu,
-                    'The History\'s button context menu is opened. '
-                    'Recently Closed Tabs is visible.')
-
+        recently_closed_menu = exists(recently_closed_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, recently_closed_menu, 'The History\'s button context menu is opened. '
+                                                'Recently Closed Tabs are visible.')
         click(recently_closed_pattern)
-        tabs_list_exists = exists(tabs_list_pattern, 20)
-        assert_true(self, tabs_list_exists,
-                    'Previously Opened Tabs list exists. '
-                    'A new menu is displayed containing the recently closed tabs')
 
-        click(restore_tabs_pattern, 0.2)
+        tabs_list_exists = exists(tabs_list_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, tabs_list_exists, 'Previously Opened Tabs list exists. '
+                                            'A new menu is displayed containing the recently closed tabs')
+
+        restore_tabs_drop_down = exists(restore_tabs_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, restore_tabs_drop_down, 'Restore tab drop down menu.')
+        click(restore_tabs_pattern)
+
         #  check if all tabs reopened correctly
         tabs_count = len(website_image_pattern)
         for tab_index in range(6):
             if len(website_image_pattern) == 1:
                 one_tab_left = exists(website_image_pattern[0], 20)
-                assert_true(self, one_tab_left,
-                            'All {0} closed tabs are successfully reopened.'
+                assert_true(self, one_tab_left, 'All {0} closed tabs are successfully reopened.'
                             .format(tabs_count - 1))
             else:
                 tab_exists = exists(website_image_pattern.pop())
-                assert_true(self, tab_exists,
-                            'Tab {0} successfully reopened.'
-                            .format(tabs_count - tab_index))
+                assert_true(self, tab_exists, 'Tab {0} successfully reopened.'.format(tabs_count - tab_index))
                 previous_tab()
