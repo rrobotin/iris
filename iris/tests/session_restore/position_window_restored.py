@@ -18,10 +18,10 @@ class Test(BaseTest):
 
     def run(self):
         hamburger_menu_button_pattern = NavBar.HAMBURGER_MENU.similar(0.95)
-        firefox_test_site_tab_pattern = Pattern('firefox_test_site_tab.png')
-        focus_test_site_tab_pattern = Pattern('focus_test_site_tab.png').similar(0.95)
+        firefox_test_site_tab_pattern = LocalWeb.FIREFOX_TAB_ICON_TEXT
+        focus_test_site_tab_pattern = LocalWeb.FOCUS_TAB_ICON_TEXT.similar(0.95)
+        restore_previous_session_pattern = HamburgerMenu.RESTORE_PREVIOUS_SESSION
         iris_pattern = Pattern('iris_tab.png')
-        restore_previous_session_pattern = Pattern('restore_previous_session_item.png')
         console_output_height_500 = Pattern('console_output_height_500.png')
         console_output_width_500 = Pattern('console_output_width_500.png')
         console_output_height_400 = Pattern('console_output_height_400.png')
@@ -29,7 +29,7 @@ class Test(BaseTest):
         console_output_width_1000 = Pattern('console_output_width_1000.png')
 
         if not Settings.is_mac():
-            hamburger_menu_quit_item_pattern = Pattern('hamburger_menu_quit_item.png').similar(0.95)
+            hamburger_menu_quit_item_pattern = HamburgerMenu.EXIT.similar(0.95)
             minimize_window()
 
         default_window_location = Location(x=(SCREEN_WIDTH / 20), y=(SCREEN_HEIGHT / 20))
@@ -37,17 +37,16 @@ class Test(BaseTest):
         iris_tab_on_start_position = find(iris_pattern)
         drag_drop(iris_tab_on_start_position, default_window_location)
         maximize_window()
-
         change_preference('devtools.chrome.enabled', True)
 
         new_tab()
         navigate(LocalWeb.FIREFOX_TEST_SITE)
-        tab_one_loaded = exists(firefox_test_site_tab_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        tab_one_loaded = exists(firefox_test_site_tab_pattern, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, tab_one_loaded, 'First tab loaded')
 
         new_tab()
         navigate(LocalWeb.FOCUS_TEST_SITE)
-        tab_two_loaded = exists(focus_test_site_tab_pattern, 30)
+        tab_two_loaded = exists(focus_test_site_tab_pattern, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, tab_two_loaded, 'Second tab loaded')
 
         if not Settings.is_mac():
@@ -66,10 +65,7 @@ class Test(BaseTest):
         assert_true(self, tabs_located_after_size_changed, 'Tabs located after size of main window had changed.')
 
         default_tabs_position = find(focus_test_site_tab_pattern)
-        default_tabs_region = Region(0,
-                                     default_tabs_position.y,
-                                     width=SCREEN_WIDTH,
-                                     height=SCREEN_HEIGHT / 10)
+        default_tabs_region = Region(0, default_tabs_position.y, width=SCREEN_WIDTH, height=SCREEN_HEIGHT / 10)
 
         tab_two_drop_location = Location(x=0, y=(default_tabs_position.y + 2 * SCREEN_HEIGHT / 5))
 
@@ -84,7 +80,6 @@ class Test(BaseTest):
         assert_true(self, tab_two_relocated and active_tab_switched, 'Second tab relocated')
 
         tab_one_location = find(firefox_test_site_tab_pattern)
-
         tab_one_drop_location = Location(x=(tab_one_location.x + SCREEN_WIDTH / 5),
                                          y=(tab_one_location.y + SCREEN_HEIGHT / 10))
 
@@ -95,23 +90,19 @@ class Test(BaseTest):
         type(Key.ENTER)
         click_window_control('close')
 
-        tab_one_drop_location.offset(SCREEN_WIDTH / 10, SCREEN_HEIGHT / 20)
         tab_one_moved = exists(firefox_test_site_tab_pattern)
-
         assert_true(self, tab_one_moved,
                     'Changes to height and width performed. First tab\'s first relocation completed.')
         tab_one_intermediate_location = find(firefox_test_site_tab_pattern)
 
+        tab_one_drop_location.offset(SCREEN_WIDTH / 10, SCREEN_HEIGHT / 20)
         drag_drop(tab_one_intermediate_location, tab_one_drop_location, 0.5)
 
         tab_one_relocated = not exists(firefox_test_site_tab_pattern, in_region=default_tabs_region)
         assert_true(self, tab_one_relocated,
                     'First opened tab relocated. Two tabs were dragged outside the main browser window.')
 
-        tab_one_window_region = Region(0,
-                                       tab_one_drop_location.y,
-                                       width=SCREEN_WIDTH,
-                                       height=SCREEN_HEIGHT / 5)
+        tab_one_window_region = Region(0, tab_one_drop_location.y, width=SCREEN_WIDTH, height=SCREEN_HEIGHT / 5)
 
         tab_one_moved_twice = exists(firefox_test_site_tab_pattern)
         assert_true(self, tab_one_moved_twice, 'Tabs positioned in different places.')
@@ -137,13 +128,13 @@ class Test(BaseTest):
 
         firefox_restarted = exists(hamburger_menu_button_pattern, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, firefox_restarted, 'Firefox restarted successfully')
-
         click(hamburger_menu_button_pattern, 1)
+
         restore_previous_session_located = exists(restore_previous_session_pattern, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, restore_previous_session_located,
                     'The "Hamburger" menu is successfully displayed. "Restore previous session" menu item located')
-
         click(restore_previous_session_pattern)
+
         focus_site_restored = exists(focus_test_site_tab_pattern, 10)
         firefox_test_site_restored = exists(firefox_test_site_tab_pattern, 20)
         assert_true(self, focus_site_restored and firefox_test_site_restored, 'Session restored successfully')
@@ -208,8 +199,7 @@ class Test(BaseTest):
         type(Key.ENTER)
         iris_window_width_matched = exists(console_output_width_1000)
 
-        assert_true(self, iris_window_height_matched and iris_window_width_matched,
-                    'Iris window size matched. '
+        assert_true(self, iris_window_height_matched and iris_window_width_matched, 'Iris window size matched. '
                     'The previous session is successfully restored and the width, '
                     'height and position of each tab is displayed as in the previous session.')
 
