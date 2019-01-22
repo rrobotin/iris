@@ -24,6 +24,7 @@ class LocalWeb(object):
     FIREFOX_IMAGE = Pattern('firefox_full.png')
     FIREFOX_BOOKMARK = Pattern('firefox_bookmark.png')
     FIREFOX_BOOKMARK_SMALL = Pattern('firefox_bookmark_small.png')
+    FIREFOX_TAB_ICON_TEXT = Pattern('firefox_tab_icon_text.png')
 
     """Local Firefox Focus site."""
     FOCUS_TEST_SITE = 'http://%s:%s/focus/' % (_ip_host, _port)
@@ -32,6 +33,7 @@ class LocalWeb(object):
     FOCUS_IMAGE = Pattern('focus_full.png')
     FOCUS_BOOKMARK = Pattern('focus_bookmark.png')
     FOCUS_BOOKMARK_SMALL = Pattern('focus_bookmark_small.png')
+    FOCUS_TAB_ICON_TEXT = Pattern('focus_tab_icon_text.png')
 
     """Local Mozilla site."""
     MOZILLA_TEST_SITE = 'http://%s:%s/mozilla/' % (_ip_host, _port)

@@ -14,3 +14,5 @@ class HamburgerMenu(object):
     EDIT_BUTTONS_BELOW_ZOOM_BUTTONS = Pattern('edit_buttons_below_zoom_buttons.png')
     HAMBUREGR_MENU = Pattern('PanelUI_menu_button.png')
     HAMBURGER_MENU_FIND_IN_PAGE_PATTERN = Pattern('hamburger_menu_find_in_page_pattern.png')
+    EXIT = Pattern('hamburger_menu_exit.png')
+    RESTORE_PREVIOUS_SESSION = Pattern('hamburger_restore_previous_session.png')
