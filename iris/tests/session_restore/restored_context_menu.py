@@ -18,38 +18,34 @@ class Test(BaseTest):
     def run(self):
         test_urls = [LocalWeb.FIREFOX_TEST_SITE, LocalWeb.FOCUS_TEST_SITE]
         logo_patterns = [LocalWeb.FIREFOX_LOGO, LocalWeb.FOCUS_LOGO]
-        firefox_local_tab_pattern = Pattern('firefox_local_tab.png')
+        firefox_local_tab_pattern = LocalWeb.FIREFOX_TAB_ICON_TEXT
         undo_close_tab_pattern = Pattern('undo_close_tab.png')
 
         new_tab()
         navigate(test_urls[0])
-        first_website_loaded = exists(logo_patterns[0], 20)
-        assert_true(self, first_website_loaded,
-                    'First tab is successfully loaded.')
+        first_website_loaded = exists(logo_patterns[0], DEFAULT_SITE_LOAD_TIMEOUT)
+        assert_true(self, first_website_loaded, 'First tab is successfully loaded.')
 
         new_tab()
         navigate(test_urls[1])
-        second_website_loaded = exists(logo_patterns[1], 20)
-        assert_true(self, second_website_loaded,
-                    'Second tab is successfully loaded.')
+        second_website_loaded = exists(logo_patterns[1], DEFAULT_SITE_LOAD_TIMEOUT)
+        assert_true(self, second_website_loaded, 'Second tab is successfully loaded.')
 
         close_tab()
+
         try:
-            second_tab_closed = wait_vanish(logo_patterns[1], 3)
-            assert_true(self, second_tab_closed,
-                        'Second tab successfully closed.')
+            second_tab_closed = wait_vanish(logo_patterns[1], DEFAULT_UI_DELAY_LONG)
+            assert_true(self, second_tab_closed, 'Second tab successfully closed.')
         except FindError:
-            raise FindError('Second tab is still open')
-        first_tab_is_active = exists(firefox_local_tab_pattern, 20)
-        assert_true(self, first_tab_is_active,
-                    'First tab is active.')
+            raise FindError('Second tab is still open.')
 
-        right_click(firefox_local_tab_pattern, 0.2)
-        context_menu_exists = exists(undo_close_tab_pattern, 20)
-        assert_true(self, context_menu_exists,
-                    'Undo Close Tab option exists.')
+        first_tab_is_active = exists(firefox_local_tab_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, first_tab_is_active, 'First tab is active.')
+        right_click(firefox_local_tab_pattern)
 
-        click(undo_close_tab_pattern, 0.2)
-        second_website_loaded = exists(logo_patterns[1], 20)
-        assert_true(self, second_website_loaded,
-                    'The previously closed tab is reopened.')
+        context_menu_exists = exists(undo_close_tab_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, context_menu_exists, 'Undo Close Tab option exists.')
+        click(undo_close_tab_pattern)
+
+        second_website_loaded = exists(logo_patterns[1], DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, second_website_loaded, 'The previously closed tab is reopened.')
