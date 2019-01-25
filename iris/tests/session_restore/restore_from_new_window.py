@@ -15,36 +15,25 @@ class Test(BaseTest):
         self.test_suite_id = '68'
         self.locales = ['en-US']
 
-    def setup(self):
-        BaseTest.setup(self)
-        self.profile = Profile.BRAND_NEW
-
     def run(self):
         new_tab()
         navigate(LocalWeb.FIREFOX_TEST_SITE)
-        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
-        assert_true(self, website_one_loaded,
-                    'Page 1 successfully loaded, firefox logo found.')
+        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
+        assert_true(self, website_one_loaded, 'Page 1 successfully loaded, firefox logo found.')
 
         new_tab()
         navigate(LocalWeb.MOZILLA_TEST_SITE)
-        website_two_loaded = exists(LocalWeb.MOZILLA_LOGO, 10)
-        assert_true(self, website_two_loaded,
-                    'Page 2 successfully loaded, mozilla logo found.')
+        website_two_loaded = exists(LocalWeb.MOZILLA_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
+        assert_true(self, website_two_loaded, 'Page 2 successfully loaded, mozilla logo found.')
 
-        restart_firefox(self,
-                        self.browser.path,
-                        self.profile_path,
-                        self.base_local_web_url)
+        restart_firefox(self, self.browser.path, self.profile_path, self.base_local_web_url)
 
         click_hamburger_menu_option('Restore Previous Session')
 
         select_tab(5)
-        website_one_loaded = exists(LocalWeb.MOZILLA_LOGO, 10)
-        assert_true(self, website_one_loaded,
-                    'Page 1 successfully restored from previous session.')
+        website_one_loaded = exists(LocalWeb.MOZILLA_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
+        assert_true(self, website_one_loaded, 'Page 1 successfully restored from previous session.')
 
         select_tab(4)
-        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
-        assert_true(self, website_two_loaded,
-                    'Page 2 successfully restored from previous session.')
+        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
+        assert_true(self, website_two_loaded, 'Page 2 successfully restored from previous session.')
