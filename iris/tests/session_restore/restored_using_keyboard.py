@@ -24,21 +24,16 @@ class Test(BaseTest):
         for _ in range(5):
             new_tab()
             navigate(local_url[_])
-            website_loaded = exists(local_url_logo_pattern[_], 20)
-            assert_true(self, website_loaded,
-                        'Website {0} loaded'
-                        .format(_ + 1))
+            website_loaded = exists(local_url_logo_pattern[_], DEFAULT_SITE_LOAD_TIMEOUT)
+            assert_true(self, website_loaded, 'Website {0} loaded' .format(_ + 1))
 
         [close_tab() for _ in range(4)]
 
-        one_tab_exists = exists(local_url_logo_pattern[0], 20)
-        assert_true(self, one_tab_exists,
-                    'One opened tab left. {0} tabs were successfully closed.'
+        one_tab_exists = exists(local_url_logo_pattern[0], DEFAULT_SITE_LOAD_TIMEOUT)
+        assert_true(self, one_tab_exists, 'One opened tab left. {0} tabs were successfully closed.'
                     .format(len(local_url) - 1))
 
         for _ in range(4):
             undo_close_tab()
             tab_is_restored = exists(local_url_logo_pattern[_+1])  # +1 as url[0] is one opened tab
-            assert_true(self, tab_is_restored,
-                        'Tab {0} successfully restored'
-                        .format(_ + 2))
+            assert_true(self, tab_is_restored, 'Tab {0} successfully restored' .format(_ + 2))
