@@ -29,7 +29,6 @@ class Test(BaseTest):
         console_output_width_1000 = Pattern('console_output_width_1000.png')
 
         if not Settings.is_mac():
-            hamburger_menu_quit_item_pattern = HamburgerMenu.EXIT.similar(0.95)
             minimize_window()
 
         default_window_location = Location(x=(SCREEN_WIDTH / 20), y=(SCREEN_HEIGHT / 20))
