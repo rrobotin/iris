@@ -30,7 +30,6 @@ class Test(BaseTest):
         assert_true(self, website_two_loaded, 'Page 2 successfully loaded, mozilla logo found.')
 
         restart_firefox(self, self.browser.path, self.profile_path, self.base_local_web_url)
-        wait_for_firefox_restart()
 
         click(hamburger_menu_button_pattern, DEFAULT_UI_DELAY)
 
@@ -39,11 +38,11 @@ class Test(BaseTest):
                     'The "Hamburger" menu is successfully displayed. "Restore previous session" menu item located')
         click(restore_previous_session_pattern)
 
-        select_tab(5)
+        select_tab(4)
         website_one_loaded = exists(LocalWeb.MOZILLA_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, website_one_loaded, 'Page 1 successfully restored from previous session.')
 
-        select_tab(4)
+        select_tab(3)
         website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, website_two_loaded, 'Page 2 successfully restored from previous session.')
 

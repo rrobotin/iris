@@ -73,8 +73,6 @@ class Test(BaseTest):
 
         restart_firefox(self, self.browser.path, self.profile_path, self.base_local_web_url)
 
-        wait_for_firefox_restart()
-
         click(hamburger_menu_button_pattern, DEFAULT_UI_DELAY)
 
         restore_previous_session_located = exists(restore_previous_session_pattern, DEFAULT_FIREFOX_TIMEOUT)
