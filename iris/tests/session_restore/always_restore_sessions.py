@@ -22,41 +22,40 @@ class Test(BaseTest):
         restore_previous_session_unchecked_pattern = Pattern('restore_previous_session_unchecked.png')
 
         navigate('about:preferences')
-        restore_previous_session_checkbox_available = exists(restore_previous_session_unchecked_pattern, 20)
+        restore_previous_session_checkbox_available = \
+            exists(restore_previous_session_unchecked_pattern, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, restore_previous_session_checkbox_available,
                     'Page about:preferences is loaded. Checkbox "Restore previous session" is available')
-
         click(restore_previous_session_unchecked_pattern)
+
         checkbox_restore_previous_session_checked = exists(restore_previous_session_checked_pattern)
         assert_true(self, checkbox_restore_previous_session_checked, '"Restore previous session" enabled.')
 
         new_tab()
         navigate(url_first)
-        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
+        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, website_one_loaded, 'Page 1 successfully loaded, firefox logo found.')
 
         new_tab()
         navigate(url_second)
-        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
+        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, website_two_loaded, 'Page 2 successfully loaded, firefox logo found.')
 
-        restart_firefox(self,
-                        self.browser.path,
-                        self.profile_path,
-                        self.base_local_web_url)
+        restart_firefox(self, self.browser.path, self.profile_path, self.base_local_web_url)
 
         next_tab()
         checkbox_restore_previous_session_checked = exists(restore_previous_session_checked_pattern)
         assert_true(self, checkbox_restore_previous_session_checked, '"Restore previous session" checked.')
 
         click(restore_previous_session_checked_pattern)
-        restore_previous_session_unchecked_exists = exists(restore_previous_session_unchecked_pattern, 20)
+        restore_previous_session_unchecked_exists = \
+            exists(restore_previous_session_unchecked_pattern, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, restore_previous_session_unchecked_exists, '"Restore previous session" is unchecked.')
 
         close_tab()
-        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
+        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, website_one_loaded, 'Page 1 successfully loaded after restart.')
 
         next_tab()
-        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
+        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, website_two_loaded, 'Page 2 successfully loaded after restart.')
