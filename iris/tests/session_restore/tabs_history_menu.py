@@ -67,7 +67,7 @@ class Test(BaseTest):
         tabs_count = len(website_image_pattern)
         for tab_index in range(6):
             if len(website_image_pattern) == 1:
-                one_tab_left = exists(website_image_pattern[0], 20)
+                one_tab_left = exists(website_image_pattern[0], DEFAULT_SITE_LOAD_TIMEOUT)
                 assert_true(self, one_tab_left, 'All {0} closed tabs are successfully reopened.'
                             .format(tabs_count - 1))
             else:
