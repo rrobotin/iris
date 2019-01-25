@@ -45,6 +45,13 @@ class Test(BaseTest):
         new_tab()
         navigate(LocalWeb.FIREFOX_TEST_SITE)
 
+        hamburger_menu_button_exists = exists(hamburger_menu_button_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, hamburger_menu_button_exists, 'Hamburger menu appears on screen.')
+        hamburger_menu_initial_position = find(hamburger_menu_button_pattern)
+        proper_hamburger_menu_region = \
+            Region(hamburger_menu_initial_position.x - 10, hamburger_menu_initial_position.y - 10,
+                   width=100, height=100)
+
         tab_one_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, tab_one_loaded, 'Firefox tab loaded')
 
@@ -117,15 +124,16 @@ class Test(BaseTest):
         assert_true(self, firefox_tab_scrolled, 'Firefox tab scrolled successful.')
 
         # Quit via Hamburger menu
-        hamburger_menu_button_exists = exists(hamburger_menu_button_pattern, DEFAULT_FIREFOX_TIMEOUT)
-        assert_true(self, hamburger_menu_button_exists, 'Hamburger menu appears on screen.')
+        # proper_hamburger_menu_region = Region(0, 0, width=SCREEN_WIDTH / 2, height=SCREEN_HEIGHT / 5)
 
-        proper_hamburger_menu_region = Region(0, 0, width=SCREEN_WIDTH, height=SCREEN_HEIGHT / 5)
+        hamburger_menu_button_exists = exists(hamburger_menu_button_pattern, DEFAULT_FIREFOX_TIMEOUT,
+                                              in_region=proper_hamburger_menu_region)
+        assert_true(self, hamburger_menu_button_exists, 'Hamburger menu appears on screen.')
 
         if not Settings.is_mac():
             click(hamburger_menu_button_pattern, DEFAULT_UI_DELAY, in_region=proper_hamburger_menu_region)
             hamburger_menu_quit_displayed = exists(hamburger_menu_quit_item_pattern, DEFAULT_FIREFOX_TIMEOUT)
-            assert_true(self, hamburger_menu_quit_displayed, 'Hamburger menu quit item displayed.')
+            assert_true(self, hamburger_menu_quit_displayed, 'Close Firefox from the "Hamburger" menu.')
             click(hamburger_menu_quit_item_pattern, DEFAULT_UI_DELAY)
         else:
             type('q', KeyModifier.CMD)
@@ -137,10 +145,7 @@ class Test(BaseTest):
             self.firefox_runner = None
 
         # keyboard shortcut of method restart_firefox() can break test
-        self.firefox_runner = launch_firefox(
-            self.browser.path,
-            self.profile_path,
-            self.base_local_web_url)
+        self.firefox_runner = launch_firefox(self.browser.path, self.profile_path, self.base_local_web_url)
         self.firefox_runner.start()
 
         hamburger_menu_button_exists = exists(hamburger_menu_button_pattern, DEFAULT_SITE_LOAD_TIMEOUT)
