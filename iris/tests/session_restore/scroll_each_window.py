@@ -21,7 +21,7 @@ class Test(BaseTest):
         browser_console_empty_line_pattern = Pattern('browser_console_empty_line.png')
 
         if not Settings.is_mac():
-            hamburger_menu_quit_item_pattern = HamburgerMenu.EXIT
+            hamburger_menu_quit_item_pattern = Pattern('hamburger_menu_exit.png')
 
         change_preference('devtools.chrome.enabled', True)
 
@@ -50,7 +50,7 @@ class Test(BaseTest):
         hamburger_menu_initial_position = find(hamburger_menu_button_pattern)
         proper_hamburger_menu_region = \
             Region(hamburger_menu_initial_position.x - 10, hamburger_menu_initial_position.y - 10,
-                   width=100, height=100)
+                   width=SCREEN_WIDTH, height=200)
 
         tab_one_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, tab_one_loaded, 'Firefox tab loaded')
@@ -61,7 +61,7 @@ class Test(BaseTest):
         firefox_tab_location_before = find(firefox_test_site_tab_pattern)
         firefox_tab_region_before = Region(firefox_tab_location_before.x-50, firefox_tab_location_before.y-520,
                                            width=320, height=120)
-        firefox_tab_region_after = Region(x=(SCREEN_WIDTH / 2)-100, y=150-50, width=300, height=300)
+        firefox_tab_region_after = Region(x=(SCREEN_WIDTH / 2)-100, y=100, width=300, height=300)
 
         new_tab()
         navigate(LocalWeb.FOCUS_TEST_SITE)
@@ -75,7 +75,7 @@ class Test(BaseTest):
         focus_tab_location_before = find(focus_test_site_tab_pattern)
         focus_tab_region_before = Region(focus_tab_location_before.x-50, focus_tab_location_before.y-250,
                                          width=320, height=120)
-        focus_tab_region_after = Region(x=-20, y=(SCREEN_HEIGHT / 2)-100, width=300, height=300)
+        focus_tab_region_after = Region(x=0, y=(SCREEN_HEIGHT / 2)-100, width=300, height=300)
 
         # Drag-n-drop Focus tab
         focus_tab_drop_location = Location(x=50, y=(SCREEN_HEIGHT / 2))

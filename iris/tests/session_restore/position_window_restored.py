@@ -128,8 +128,8 @@ class Test(BaseTest):
         click(hamburger_menu_button_pattern, DEFAULT_UI_DELAY)
 
         restore_previous_session_located = exists(restore_previous_session_pattern, DEFAULT_SITE_LOAD_TIMEOUT)
-        assert_true(self, restore_previous_session_located,
-                    'The "Hamburger" menu is successfully displayed. "Restore previous session" menu item located')
+        assert_true(self, restore_previous_session_located, 'The "Hamburger" menu is successfully displayed. '
+                                                            '"Restore previous session" menu item located')
         click(restore_previous_session_pattern)
 
         mozilla_site_restored = exists(mozilla_test_site_tab_pattern, DEFAULT_SITE_LOAD_TIMEOUT)
