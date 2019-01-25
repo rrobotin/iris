@@ -22,35 +22,29 @@ class Test(BaseTest):
 
         new_tab()
         navigate(url_first)
-        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
+        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, website_one_loaded, 'Page 1 successfully loaded, firefox logo found.')
 
         new_tab()
         navigate(url_second)
-        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
+        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, website_two_loaded, 'Page 2 successfully loaded, firefox logo found.')
 
-        restart_firefox(self,
-                        self.browser.path,
-                        self.profile_path,
-                        self.base_local_web_url)
+        restart_firefox(self, self.browser.path, self.profile_path, self.base_local_web_url)
 
         previous_tab()
-        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
+        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, website_one_loaded, 'Page 1 successfully loaded after restart.')
 
         previous_tab()
-        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, 10)
+        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, website_two_loaded, 'Page 2 successfully loaded after restart.')
-        restart_firefox(self,
-                        self.browser.path,
-                        self.profile_path,
-                        self.base_local_web_url)
+        restart_firefox(self, self.browser.path, self.profile_path, self.base_local_web_url)
 
         previous_tab()
-        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, 1)
+        website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_FIREFOX_TIMEOUT)
         assert_false(self, website_one_loaded, 'Page 1 was not loaded after second restart.')
 
         previous_tab()
-        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, 1)
+        website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_FIREFOX_TIMEOUT)
         assert_false(self, website_two_loaded, 'Page 2 was not loaded after second restart.')
