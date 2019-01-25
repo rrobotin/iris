@@ -53,7 +53,7 @@ class Test(BaseTest):
         recently_closed_menu = exists(recently_closed_pattern, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, recently_closed_menu, 'The History\'s button context menu is opened. '
                                                 'Recently Closed Tabs are visible.')
-        click(recently_closed_pattern)
+        click(recently_closed_pattern, DEFAULT_UI_DELAY)
 
         tabs_list_exists = exists(tabs_list_pattern, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, tabs_list_exists, 'Previously Opened Tabs list exists. '
@@ -61,7 +61,7 @@ class Test(BaseTest):
 
         restore_tabs_drop_down = exists(restore_tabs_pattern, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, restore_tabs_drop_down, 'Restore tab drop down menu.')
-        click(restore_tabs_pattern)
+        click(restore_tabs_pattern, DEFAULT_UI_DELAY)
 
         #  check if all tabs reopened correctly
         tabs_count = len(website_image_pattern)

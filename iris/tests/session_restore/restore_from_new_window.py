@@ -16,6 +16,9 @@ class Test(BaseTest):
         self.locales = ['en-US']
 
     def run(self):
+        hamburger_menu_button_pattern = NavBar.HAMBURGER_MENU
+        restore_previous_session_pattern = HamburgerMenu.RESTORE_PREVIOUS_SESSION
+
         new_tab()
         navigate(LocalWeb.FIREFOX_TEST_SITE)
         website_one_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
@@ -27,8 +30,14 @@ class Test(BaseTest):
         assert_true(self, website_two_loaded, 'Page 2 successfully loaded, mozilla logo found.')
 
         restart_firefox(self, self.browser.path, self.profile_path, self.base_local_web_url)
+        wait_for_firefox_restart()
 
-        click_hamburger_menu_option('Restore Previous Session')
+        click(hamburger_menu_button_pattern, DEFAULT_UI_DELAY)
+
+        restore_previous_session_located = exists(restore_previous_session_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, restore_previous_session_located,
+                    'The "Hamburger" menu is successfully displayed. "Restore previous session" menu item located')
+        click(restore_previous_session_pattern)
 
         select_tab(5)
         website_one_loaded = exists(LocalWeb.MOZILLA_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
@@ -37,3 +46,5 @@ class Test(BaseTest):
         select_tab(4)
         website_two_loaded = exists(LocalWeb.FIREFOX_LOGO, DEFAULT_SITE_LOAD_TIMEOUT)
         assert_true(self, website_two_loaded, 'Page 2 successfully restored from previous session.')
+
+

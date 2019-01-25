@@ -17,6 +17,8 @@ class Test(BaseTest):
         self.locales = ['en-US']
 
     def run(self):
+        hamburger_menu_button_pattern = NavBar.HAMBURGER_MENU
+        restore_previous_session_pattern = HamburgerMenu.RESTORE_PREVIOUS_SESSION
         speaker_icon_active_pattern = Pattern('speaker_icon_active.png').similar(0.9)
         blocked_media_icon_pattern = Pattern('blocked_media_icon.png')
         first_label_pattern = Pattern('one_label.png').similar(0.6)
@@ -71,7 +73,14 @@ class Test(BaseTest):
 
         restart_firefox(self, self.browser.path, self.profile_path, self.base_local_web_url)
 
-        click_hamburger_menu_option('Restore Previous Session')
+        wait_for_firefox_restart()
+
+        click(hamburger_menu_button_pattern, DEFAULT_UI_DELAY)
+
+        restore_previous_session_located = exists(restore_previous_session_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        assert_true(self, restore_previous_session_located,
+                    'The "Hamburger" menu is successfully displayed. "Restore previous session" menu item located')
+        click(restore_previous_session_pattern)
 
         last_tab_restored = exists(web_developer_tools_tab_pattern, DEFAULT_FIREFOX_TIMEOUT)
         blocked_media_icon_exists = exists(double_icons, DEFAULT_FIREFOX_TIMEOUT)

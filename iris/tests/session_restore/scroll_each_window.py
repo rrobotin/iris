@@ -75,7 +75,7 @@ class Test(BaseTest):
         focus_tab_location_before = find(focus_test_site_tab_pattern)
         focus_tab_region_before = Region(focus_tab_location_before.x-50, focus_tab_location_before.y-250,
                                          width=320, height=120)
-        focus_tab_region_after = Region(x=50-100, y=(SCREEN_HEIGHT / 2)-50, width=300, height=300)
+        focus_tab_region_after = Region(x=-20, y=(SCREEN_HEIGHT / 2)-100, width=300, height=300)
 
         # Drag-n-drop Focus tab
         focus_tab_drop_location = Location(x=50, y=(SCREEN_HEIGHT / 2))
