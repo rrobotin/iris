@@ -23,16 +23,22 @@ class Test(BaseTest):
         blocked_media_icon_pattern = Pattern('blocked_media_icon.png')
         first_label_pattern = Pattern('one_label.png').similar(0.6)
         second_label_pattern = Pattern('two_label.png').similar(0.6)
+        two_labels_pattern = Pattern('two_labels.png')
         web_developer_tools_tab_pattern = Pattern('web_developer_tools_tab.png')
         double_icons = Pattern('double_icons.png')
 
         test_page_local = self.get_asset_path('index.html')
         navigate(test_page_local)
 
-        first_label_exists = exists(first_label_pattern, DEFAULT_FIREFOX_TIMEOUT)
-        assert_true(self, first_label_exists, 'Page loaded')
+        both_labels_exists = exists(two_labels_pattern, DEFAULT_SITE_LOAD_TIMEOUT)
+        assert_true(self, both_labels_exists, 'Page loaded')
+        both_labels_position = find(two_labels_pattern)
+        two_labels_region = Region(both_labels_position.x-20, both_labels_position.y-20, width=200, height=200)
 
-        right_click(first_label_pattern)
+        first_label_exists = exists(first_label_pattern, DEFAULT_FIREFOX_TIMEOUT, two_labels_region)
+        assert_true(self, first_label_exists, 'First label link is visible')
+        right_click(first_label_pattern, in_region=two_labels_region)
+
         if Settings.is_linux():
             time.sleep(DEFAULT_UI_DELAY_LONG)
             type('t')
@@ -43,9 +49,9 @@ class Test(BaseTest):
         blocked_media_icon_exists = exists(blocked_media_icon_pattern, DEFAULT_FIREFOX_TIMEOUT)
         assert_true(self, blocked_media_icon_exists, 'Blocked media tab opened')
 
-        second_label_exists = exists(second_label_pattern, DEFAULT_FIREFOX_TIMEOUT)
+        second_label_exists = exists(second_label_pattern, DEFAULT_FIREFOX_TIMEOUT, two_labels_region)
         assert_true(self, second_label_exists, 'Second link exists')
-        right_click(second_label_pattern)
+        right_click(second_label_pattern,in_region=two_labels_region)
 
         if Settings.is_linux():
             time.sleep(DEFAULT_UI_DELAY)
@@ -83,6 +89,7 @@ class Test(BaseTest):
         last_tab_restored = exists(web_developer_tools_tab_pattern, DEFAULT_FIREFOX_TIMEOUT)
         blocked_media_icon_exists = exists(double_icons, DEFAULT_FIREFOX_TIMEOUT)
         no_speaker_tabs = exists(speaker_icon_active_pattern, DEFAULT_FIREFOX_TIMEOUT)
+
         restore_session_check_result = last_tab_restored and blocked_media_icon_exists and (not no_speaker_tabs)
         assert_true(self, restore_session_check_result, 'Tabs are loaded and media blocked for all tabs')
 
