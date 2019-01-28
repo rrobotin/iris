@@ -23,7 +23,7 @@ class Test(BaseTest):
         blocked_media_icon_pattern = Pattern('blocked_media_icon.png')
         first_label_pattern = Pattern('one_label.png').similar(0.6)
         second_label_pattern = Pattern('two_label.png').similar(0.6)
-        two_labels_pattern = Pattern('two_labels.png')
+        two_labels_pattern = Pattern('two_labels_block.png')
         web_developer_tools_tab_pattern = Pattern('web_developer_tools_tab.png')
         double_icons = Pattern('double_icons.png')
 
