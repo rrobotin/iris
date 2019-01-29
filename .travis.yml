@@ -1,17 +1,17 @@
-dist: xenial
 language: python
 python: '2.7'
-with_content_shell: true
 deploy:
   provider: codedeploy
   access_key_id: AKIAIDC5G5PFPRVIZERQ
   secret_access_key:
     secure: AJo9NPWOnb0S0dVJZ+6dVHBaJlzEkLfh7RL8UP1PXvTBFyuM9qlLzHzCu17YtG3cGRUrtn+vTUb7aMbwxlmbpXNnFaNkObR3VClnaWr5lE7IUdU+x5aEhRT7FoVBd5JuZxQ/3RIgmQn5S0nZT08Z1UBJpak1HLH1ElbcjpNvMvM/Oxl4G5vkIL4SwOA1sX+ZBpU4PmumFAdOmJkhYvWQ+hDSeQfwHZDvA91sOqO5BFvRU3cmNHMK5phD4bCXrdqLYgCKlp72gbCGaqs1x1ggh6lEXmHVhcBKV2ctEHURkws2fYqsnOyWqLXpCKKzJmcUpkNZdryK/fxp7QzrLYyaAOsJE1DVj1EPARoNpmMkQ9DZwmQfKBAjrkdIS4fPYZxxAq2Tf8xe0IKeIXuisL1elnwNXhc9DPdZvKnjuMz3JuAUxaaBxVKAM4PyRqxd1a7DOZ4Zk8QVanRC/ZfrbNeAEXdwBxt0zU/2VQOxxkPKD8YSBWGtHpX5StHjDagJtjrQGD4rHuYld0s8Uy0AVjdJRGHhgqDpydEPUcub1r1yk+Xh0Zs0xeFTAI30sxHfIbQR1yQgWAWYyw53t1scs0io/XRD6ainu7Bbk3Vur4/UFCH7ec7LjlVC67C6r8TH/dfYLYgL0Il8ZmBo7KTaz2Uy8EoLC+HYkWWnlGpLGqf5Q04=
+  application: iris
   upload-dir: "/iris"
+  wait-until-deployed: true
   on:
     repo: rrobotin/iris
     branch: test_aws_ci
-install:
+after_deploy:
   - bootstrap/bootstrap.sh
   - pip install pip==9.0.3
   - pip install pipenv
