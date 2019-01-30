@@ -20,7 +20,8 @@ deploy:
     local-dir: $APPDIR
     upload-dir: "build/$TRAVIS_BRANCH"
     on:
-      branch: development
+      repo: rrobotin/iris
+      branch: test_aws_ci
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
@@ -31,7 +32,8 @@ deploy:
     key: "build/$TRAVIS_BRANCH/$TRAVIS_COMMIT.zip"
     wait-until-deployed: true
     on:
-      branch: development
+      repo: rrobotin/iris
+      branch: test_aws_ci
 after_deploy:
   - bootstrap/bootstrap.sh
   - pip install pip==9.0.3
