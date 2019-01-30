@@ -3,12 +3,11 @@ python: '2.7'
 script:
   - pwd
   - ls -al
-  - cd ../
 env:
   - APPDIR=iris_app_dir
 before_deploy:
   - zip -r $TRAVIS_COMMIT $(git ls-files)
-  - mkdir -p $DDIR
+  - mkdir -p $APPDIR
   - cp $TRAVIS_COMMIT.zip $APPDIR
 deploy:
   - provider: s3
