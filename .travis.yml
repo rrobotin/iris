@@ -3,19 +3,35 @@ python: '2.7'
 script:
   - pwd
   - ls -al
+  - cd ../
+env:
+  - APPDIR=iris_app_dir
+before_deploy:
+  - zip -r $TRAVIS_COMMIT $(git ls-files)
+  - mkdir -p $DDIR
+  - cp $TRAVIS_COMMIT.zip $APPDIR
 deploy:
-  provider: codedeploy
-  access_key_id: AKIAIDC5G5PFPRVIZERQ
-  secret_access_key:
-    secure: CKrcygw0y5q0XhvcTG7u8S3ZS0s76F1Jo5FcLJCOgfuV1Jsl8F0u21+CD5YOQ0T1GbJxJtHJDz1XwzGue1S4TDjZ8vJH5h273KxoXifgDuMxUdFy/TVoAh6Vd/aL7kEoAu0pns1fbzPZIKA0mU7C+9Ra2t57A6Zi/ewRwyil4GDeA8FyoCYeryklRzwqypCIupiL+2kMEnr6WaQ+bWSPVENGXRrtqK7BFrPA7UgLv+4yCNGP0M6a+pZFAR/utTSOPxg7CY2/woPISJK9m0hpiRkwdOtoUKAxwYM68v/fl+zVEfW0qZPYnX72lCSCLj17hUqzQA5r/B6dNNcw1V8xfvoxAmjMcQ3UTLDeyntimvPVJ8hm06qZ3CparAFc/ceQyrFLvWNK2xA5sZZ2jxV9duSAW+jIbtjSbum8LfB3lc5PNxCmXGcbgTrvS4geyY56+wu5et1rk1zKo/gCzp5aoGDUuwdfvn/vfRuHTk7rH3gEzvVK/FjccET0F3akPE9BwXsZOqcn3rK1Kv3VxLrE96Wi15ljPDQtaCDqU0AIgxm0szBSikQpE0Hg6RKmRsYcZrfXVmS9o+6I75rm1N/HVMk5UdQi3+1NvPmVu0DkKRFdxoBFpdEKvTDxmdjHpeWnmLEIun6sZlOFeLRhPAamcTEejzrrxQ2MI/AidCZwGsQ=
-  bucket: ''
-  key: ''
-  bundle_type: ''
-  application: iris
-  deployment_group: travis-ci-grouop
-  on:
-    repo: rrobotin/iris
-    branch: test_aws_ci
+  - provider: s3
+    skip-cleanup: true
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: $AWS_BUCKET
+    region: $AWS_REGION
+    local-dir: $APPDIR
+    upload-dir: "build/$TRAVIS_BRANCH"
+    on:
+      branch: development
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    application: $AWS_APP_NAME
+    deployment_group: $AWS_DEPLOYMENT_GROUP
+    region: $AWS_REGION
+    bucket: $AWS_BUCKET
+    key: "build/$TRAVIS_BRANCH/$TRAVIS_COMMIT.zip"
+    wait-until-deployed: true
+    on:
+      branch: development
 after_deploy:
   - bootstrap/bootstrap.sh
   - pip install pip==9.0.3
