@@ -6,6 +6,7 @@ script:
 env:
   - APPDIR=iris_app_dir
 before_deploy:
+  - pwd
   - zip -r $TRAVIS_COMMIT $(git ls-files)
   - mkdir -p $APPDIR
   - cp $TRAVIS_COMMIT.zip $APPDIR
