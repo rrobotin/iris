@@ -9,6 +9,7 @@ from iris.api.core.errors import FindError, APIHelperError
 from iris.api.core.firefox_ui.library_menu import SidebarBookmarks
 from iris.api.core.firefox_ui.location_bar import LocationBar
 from iris.api.core.key import Key, KeyModifier, key_down, key_up, type
+from iris.api.core.keyboard.keyboard_manipulation import virtual_type
 from iris.api.core.location import Location
 from iris.api.core.pattern import Pattern
 from iris.api.core.region import Region, click, drag_drop, find, wait, wait_vanish
@@ -462,7 +463,7 @@ def new_tab():
     if Settings.get_os() == Platform.MAC:
         virtual_type(text='t', modifier=KeyModifier.CMD)
     else:
-        type(text='t', modifier=KeyModifier.CTRL)
+        virtual_type(text='t', modifier=KeyModifier.CTRL)
     # Wait to allow new tab to be opened.
     time.sleep(Settings.FX_DELAY)
 

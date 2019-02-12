@@ -4,6 +4,7 @@ from iris.__main__ import logger
 from iris.api.core.keyboard.Xkeyboard import XKeyboard
 from iris.api.core.keyboard.key import KeyModifier, _IrisKey
 from iris.api.core.keyboard.keyboard_api import DEFAULT_KEY_SHORTCUT_DELAY
+from iris.api.core.platform import Platform
 from iris.api.core.settings import Settings, DEFAULT_TYPE_DELAY
 
 
@@ -61,3 +62,13 @@ def virtual_type(text=None, modifier=None, interval=None):
 
     if Settings.type_delay != DEFAULT_TYPE_DELAY:
         Settings.type_delay = DEFAULT_TYPE_DELAY
+
+
+def new_tab_virtual():
+    """Open a new browser tab."""
+    if Settings.get_os() == Platform.MAC:
+        virtual_type(text='t', modifier=KeyModifier.CMD)
+    else:
+        virtual_type(text='t', modifier=KeyModifier.CTRL)
+    # Wait to allow new tab to be opened.
+    time.sleep(Settings.FX_DELAY)
