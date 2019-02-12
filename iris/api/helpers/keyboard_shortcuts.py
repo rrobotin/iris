@@ -460,7 +460,7 @@ def minimize_window():
 def new_tab():
     """Open a new browser tab."""
     if Settings.get_os() == Platform.MAC:
-        type(text='t', modifier=KeyModifier.CMD)
+        virtual_type(text='t', modifier=KeyModifier.CMD)
     else:
         type(text='t', modifier=KeyModifier.CTRL)
     # Wait to allow new tab to be opened.
