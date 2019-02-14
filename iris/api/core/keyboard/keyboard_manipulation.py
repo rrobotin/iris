@@ -1,11 +1,14 @@
 import time
 
-from iris.__main__ import logger
+import logging
+
 from iris.api.core.keyboard.Xkeyboard import XKeyboard
-from iris.api.core.keyboard.key import KeyModifier, _IrisKey
+from iris.api.core.keyboard.key import KeyModifier, _IrisKey, logger
 from iris.api.core.keyboard.keyboard_api import DEFAULT_KEY_SHORTCUT_DELAY
 from iris.api.core.platform import Platform
 from iris.api.core.settings import Settings, DEFAULT_TYPE_DELAY
+
+logger = logging.getLogger(__name__)
 
 
 def virtual_type(text=None, modifier=None, interval=None):
