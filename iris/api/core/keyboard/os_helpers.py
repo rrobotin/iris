@@ -11,7 +11,7 @@ import mss
 # from src.core.api.enums import OSPlatform
 # from src.core.api.errors import APIHelperError
 from iris.api.core.errors import APIHelperError
-from iris.api.core.keyboard.key import OSPlatform
+from iris.api.core.keyboard.key import *
 
 OS_NAME = mozinfo.os
 OS_VERSION = mozinfo.os_version

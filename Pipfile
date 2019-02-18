@@ -24,7 +24,7 @@ mozrunner = "==7.3.0"
 mss = "==3.3.1"
 pep8 = "*"
 # Platform dependencies
-xlib = {platform_system = "== 'Linux'",version = "==0.21"}
+xlib = "==0.21"
 
 [dev-packages]
 

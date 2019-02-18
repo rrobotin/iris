@@ -14,11 +14,6 @@ from iris.api.core.settings import Settings
 logger = logging.getLogger(__name__)
 
 
-class OSPlatform(object):
-    WINDOWS = 'win'
-    LINUX = 'linux'
-    MAC = 'osx'
-
 class _IrisKey(object):
 
     def __init__(self, label, value=None, x11key=None, reserved=True):
@@ -266,3 +261,9 @@ class KeyModifier(object):
             if item.value & value:
                 active_modifiers.append(item.label)
         return active_modifiers
+
+
+class OSPlatform(object):
+    WINDOWS = 'win'
+    LINUX = 'linux'
+    MAC = 'osx'

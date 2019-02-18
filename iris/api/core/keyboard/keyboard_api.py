@@ -10,7 +10,7 @@ import pyautogui
 import pyperclip
 
 from iris.api.core.errors import FindError
-from iris.api.core.keyboard.key import _IrisKey, logger, KeyModifier, OSPlatform, Key
+from iris.api.core.keyboard.key import *
 from iris.api.core.settings import Settings
 from iris.api.core.util.parse_args import parse_args
 

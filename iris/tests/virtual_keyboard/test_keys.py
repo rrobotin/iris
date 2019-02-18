@@ -1,7 +1,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
-from iris.api.core.keyboard.keyboard_manipulation import new_tab_virtual
+from iris.api.core.keyboard.keyboard_manipulation import new_tab_virtual, virtual_type
 from iris.test_case import *
 
 
@@ -9,9 +9,9 @@ class Test(BaseTest):
 
     def __init__(self):
         BaseTest.__init__(self)
-        self.meta = 'Clear all the History.'
-        self.test_case_id = '172045'
-        self.test_suite_id = '2000'
+        self.meta = 'Test fake keyboards.'
+        self.test_case_id = '____id____'
+        self.test_suite_id = '___suite_id___'
         self.locales = ['en-US']
 
     def run(self):
