@@ -12,25 +12,13 @@ before_deploy:
   - sudo mkdir -p $APPDIR
   - sudo cp $TRAVIS_COMMIT.zip $APPDIR
 deploy:
-  - provider: s3
-    skip-cleanup: true
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
-    bucket: $AWS_BUCKET
-    region: $AWS_REGION
-    local-dir: $APPDIR
-    upload-dir: "build/$TRAVIS_BRANCH"
-    on:
-      repo: rrobotin/iris
-      branch: test_aws_ci
   - provider: codedeploy
+    revision_type: github
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     application: $AWS_APP_NAME
     deployment_group: $AWS_DEPLOYMENT_GROUP
     region: $AWS_REGION
-    bucket: $AWS_BUCKET
-    key: "build/$TRAVIS_BRANCH/$TRAVIS_COMMIT.zip"
     wait-until-deployed: true
     on:
       repo: rrobotin/iris
