@@ -2,9 +2,13 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/codedeploy-iris
+    destination: /home/ubuntu/mozilla/iris
 hooks:
   AfterInstall:
-    - location: scripts/after-install.sh
-      timeout: 300
+    - location: after_install.sh
+      timeout: 3000
+      runas: ubuntu
+  ApplicationStart:
+    - location: run_tests.sh
+      timeout: 2000
       runas: ubuntu
