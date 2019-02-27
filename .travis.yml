@@ -4,13 +4,13 @@ script:
   - pwd
   - ls -al
 env:
-  - APPDIR=iris_app_dir
+  - APPDIR=/rrobotin/iris
 before_deploy:
   - pwd
   - git ls-files
   - zip -r $TRAVIS_COMMIT $(git ls-files)
-  - mkdir -p $APPDIR
-  - cp $TRAVIS_COMMIT.zip $APPDIR
+  - sudo mkdir -p $APPDIR
+  - sudo cp $TRAVIS_COMMIT.zip $APPDIR
 deploy:
   - provider: s3
     skip-cleanup: true
@@ -35,15 +35,6 @@ deploy:
     on:
       repo: rrobotin/iris
       branch: test_aws_ci
-after_deploy:
-  - bootstrap/bootstrap.sh
-  - pip install pip==9.0.3
-  - pip install pipenv
-  - pipenv install
-  - export DISPLAY=:99.0
-  - Xvfb :99 -screen 0 1920x1080x24+32 +extension GLX +extension RANDR > /dev/null 2>&1 &
-  - sleep 3
-  - pipenv run iris -j -n -d ci_tests
 notifications:
   email:
     recipients:
