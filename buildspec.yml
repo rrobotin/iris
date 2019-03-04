@@ -1,0 +1,57 @@
+version: 0.2
+
+env:
+  variables:
+    JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
+  parameter-store:
+    LOGIN_PASSWORD: "dockerLoginPassword"
+
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+      - echo Build started on `date`
+      - echo -e "PWD #####\n"
+      - pwd
+      - cd ~
+      - echo -e "PWD #####\n"
+      - pwd
+      - echo -e " apt update ##### \n"
+      - sudo apt-get update
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+      - echo Build started on `date`
+      - cd bootstrap/
+      - echo -e "LIST #####\n"
+      - ls -all
+      - echo -e " bootstrap ##### \n"
+      - sudo chmod +x bootstrap.sh
+      - sudo chmod +x linux_bootstrap.sh
+      - sudo ./bootstrap.sh
+      - pip install pip==9.0.3
+      - pip install pipenv
+      - echo -e " pipenv install ##### \n"
+      - sudo pipenv install
+      - echo -e " FINISH INSTALL!!!! ##### \n"
+  build:
+    commands:
+      - echo Entered the build phase...
+      - echo Build started on `date`
+      - echo -e "PWD #####\n"
+      - pwd
+      - cd ~/mozilla/iris
+      - echo -e "PWD #####\n"
+      - pwd
+      - export DISPLAY=:99.0
+      - Xvfb :99 -screen 0 1920x1080x24+32 +extension GLX +extension RANDR > /dev/null 2>&1 &
+      - sleep 3
+      - echo -e " start CI tests ##### \n"
+      - sudo pipenv run iris -j -n -d ci_tests -i DEBUG
+      - echo -e " FINISH RUNNING TESTS !!!! ##### \n"
+  post_build:
+    commands:
+      - echo Entered the post_build phase...
+      - cd ~
+      - ls -all
+      - echo Build completed on `date`
