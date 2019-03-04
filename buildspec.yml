@@ -6,8 +6,7 @@ phases:
       - echo Entered the install phase...
       - echo Build started on `date`
       - pwd
-      - cd ~
-      - pwd
+      - ls -all
       - sudo apt-get update
   pre_build:
     commands:
