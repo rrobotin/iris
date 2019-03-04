@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Entered the install phase...
       - echo Build started on `date`
-      - echo 'PWD #####\n\'
+      - echo PWD #####\n
       - pwd
       - cd ~
       - echo "PWD #####\n"
