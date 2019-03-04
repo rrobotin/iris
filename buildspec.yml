@@ -5,12 +5,12 @@ phases:
     commands:
       - echo Entered the install phase...
       - echo Build started on `date`
-      - echo -e "PWD #####\n"
+      - echo 'PWD #####\n\'
       - pwd
       - cd ~
-      - echo -e "PWD #####\n"
+      - echo "PWD #####\n"
       - pwd
-      - echo -e " apt update ##### \n"
+      - echo " apt update ##### \n"
       - sudo apt-get update
   pre_build:
     commands:
