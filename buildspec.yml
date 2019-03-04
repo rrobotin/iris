@@ -8,6 +8,8 @@ phases:
       - pwd
       - ls -all
       - sudo apt-get update
+      - sudo apt install xvfb
+      - sudo apt install dbus-x11
   pre_build:
     commands:
       - echo Entered the pre_build phase...
