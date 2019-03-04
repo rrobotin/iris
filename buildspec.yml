@@ -7,9 +7,9 @@ phases:
       - echo Build started on `date`
       - pwd
       - ls -all
-      - sudo apt-get update
-      - sudo apt install xvfb
-      - sudo apt install dbus-x11
+      - sudo apt-get update -y
+      - sudo apt install -y xvfb
+      - sudo apt install -y dbus-x11
   pre_build:
     commands:
       - echo Entered the pre_build phase...
