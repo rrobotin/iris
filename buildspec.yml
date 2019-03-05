@@ -40,8 +40,6 @@ phases:
   post_build:
     commands:
       - echo Entered the post_build phase...
-      - cd /Users
-      - ls -all
-      - cd ubuntu/
+      - cd ~/.iris
       - ls -all
       - echo Build completed on `date`
