@@ -34,7 +34,7 @@ master_test_list = create_master_test_list()
 
 def main():
     initialize_platform()
-    verify_config()
+    #verify_config()
     run_iris()
 
 
