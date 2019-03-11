@@ -1,6 +1,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this file,
 # You can obtain one at http://mozilla.org/MPL/2.0/.
+import logging
 
 from errors import FindError
 from key import key_up, key_down, paste
@@ -18,7 +19,7 @@ try:
 except ImportError:
     from PIL import Image
 
-pyautogui.FAILSAFE = False
+#pyautogui.FAILSAFE = False
 logger = logging.getLogger(__name__)
 
 
@@ -349,7 +350,7 @@ def create_region_from_patterns(top=None, bottom=None, left=None, right=None, pa
 
     logger.debug('Creating region from %s pattern(s).' % len(patterns))
 
-    a, b = pyautogui.size()
+    a, b = (0,0)#pyautogui.size()
     p1 = Location(a, b)
     p2 = Location(0, 0)
 
@@ -425,12 +426,13 @@ def hover(where=None, duration=0, in_region=None):
                 possible_offset = where.get_target_offset()
                 if possible_offset is not None:
                     move_to = Location(pos.x + possible_offset.x, pos.y + possible_offset.y)
-                    pyautogui.moveTo(move_to.x, move_to.y)
+                    # pyautogui.moveTo(move_to.x, move_to.y)
                 else:
                     move_to = Location(pos.x, pos.y)
-                    pyautogui.moveTo(move_to.x + needle_width / 2, move_to.y + needle_height / 2)
+                    # pyautogui.moveTo(move_to.x + needle_width / 2, move_to.y + needle_height / 2)
             else:
-                pyautogui.moveTo(pos.x + needle_width / 2, pos.y + needle_height / 2)
+                possible_offset = where.get_target_offset()
+                # pyautogui.moveTo(pos.x + needle_width / 2, pos.y + needle_height / 2)
         else:
             raise FindError('Unable to find image %s' % where.get_filename())
 
@@ -438,12 +440,14 @@ def hover(where=None, duration=0, in_region=None):
         ocr_search = OCRSearch()
         a_match = ocr_search.text_search_by(where, True, in_region)
         if a_match is not None:
-            pyautogui.moveTo(a_match['x'] + a_match['width'] / 2, a_match['y'] + a_match['height'] / 2)
+            possible_offset = where.get_target_offset()
+            #pyautogui.moveTo(a_match['x'] + a_match['width'] / 2, a_match['y'] + a_match['height'] / 2)
         else:
             raise FindError('Unable to find text %s' % where)
 
     elif isinstance(where, Location):
-        pyautogui.moveTo(where.x, where.y, duration)
+        possible_offset = where.get_target_offset()
+        # pyautogui.moveTo(where.x, where.y, duration)
 
     else:
         raise ValueError(INVALID_GENERIC_INPUT)

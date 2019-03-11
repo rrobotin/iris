@@ -267,38 +267,38 @@ class KeyModifier(object):
         return active_modifiers
 
 
-# def key_down(key):
-#     """Performs a keyboard key press without the release. This will put that key in a held down state.
-#
-#     :param key: The key to be pressed down.
-#     :return: None.
-#     """
-#     if isinstance(key, _IrisKey):
-#         pyautogui.keyDown(str(key))
-#     elif isinstance(key, str):
-#         if pyautogui.isValidKey(key):
-#             pyautogui.keyDown(key)
-#         else:
-#             raise ValueError("Unsupported string input.")
-#     else:
-#         raise ValueError(INVALID_GENERIC_INPUT)
+def key_down(key):
+    """Performs a keyboard key press without the release. This will put that key in a held down state.
+
+    :param key: The key to be pressed down.
+    :return: None.
+    """
+    # if isinstance(key, _IrisKey):
+    #     pyautogui.keyDown(str(key))
+    # elif isinstance(key, str):
+    #     if pyautogui.isValidKey(key):
+    #         pyautogui.keyDown(key)
+    #     else:
+    #         raise ValueError("Unsupported string input.")
+    # else:
+    #     raise ValueError(INVALID_GENERIC_INPUT)
 
 
-# def key_up(key):
-#     """Performs a keyboard key release (without the press down beforehand).
-#
-#     :param key: The key to be released up.
-#     :return: None.
-#     """
-#     if isinstance(key, _IrisKey):
-#         pyautogui.keyUp(str(key))
-#     elif isinstance(key, str):
-#         if pyautogui.isValidKey(key):
-#             pyautogui.keyUp(key)
-#         else:
-#             raise ValueError("Unsupported string input.")
-#     else:
-#         raise ValueError(INVALID_GENERIC_INPUT)
+def key_up(key):
+    """Performs a keyboard key release (without the press down beforehand).
+
+    :param key: The key to be released up.
+    :return: None.
+    """
+    # if isinstance(key, _IrisKey):
+    #     pyautogui.keyUp(str(key))
+    # elif isinstance(key, str):
+    #     if pyautogui.isValidKey(key):
+    #         pyautogui.keyUp(key)
+    #     else:
+    #         raise ValueError("Unsupported string input.")
+    # else:
+    #     raise ValueError(INVALID_GENERIC_INPUT)
 
 
 def type(text=None, modifier=None, interval=None):
