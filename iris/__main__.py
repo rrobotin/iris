@@ -10,7 +10,7 @@ import logging
 import shutil
 from multiprocessing import Process
 
-from api.core.key import check_keyboard_state
+#from api.core.key import check_keyboard_state
 from api.core.platform import Platform
 from api.core.settings import Settings
 from api.core.util.core_helper import IrisCore
@@ -34,7 +34,7 @@ master_test_list = create_master_test_list()
 
 def main():
     initialize_platform()
-    verify_config()
+    #verify_config()
     run_iris()
 
 
@@ -82,13 +82,13 @@ def initialize_platform():
         finish(1)
 
 
-def verify_config():
-    """Checks keyboard state is correct or if Tesseract and 7zip are installed."""
-    try:
-        if not all([check_keyboard_state(), IrisCore.init_tesseract_path(), IrisCore.check_7zip()]):
-            finish(1)
-    except KeyboardInterrupt:
-        finish(1)
+# def verify_config():
+#     """Checks keyboard state is correct or if Tesseract and 7zip are installed."""
+#     try:
+#         if not all([check_keyboard_state(), IrisCore.init_tesseract_path(), IrisCore.check_7zip()]):
+#             finish(1)
+#     except KeyboardInterrupt:
+#         finish(1)
 
 
 def run_iris():

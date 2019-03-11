@@ -349,7 +349,7 @@ def create_region_from_patterns(top=None, bottom=None, left=None, right=None, pa
 
     logger.debug('Creating region from %s pattern(s).' % len(patterns))
 
-    a, b = pyautogui.size()
+    a, b = (0,0)#pyautogui.size()
     p1 = Location(a, b)
     p2 = Location(0, 0)
 
