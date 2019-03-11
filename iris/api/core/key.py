@@ -7,7 +7,7 @@ import logging
 import subprocess
 import time
 
-import pyautogui
+#import pyautogui
 import pyperclip
 
 from errors import FindError
@@ -273,15 +273,15 @@ def key_down(key):
     :param key: The key to be pressed down.
     :return: None.
     """
-    if isinstance(key, _IrisKey):
-        pyautogui.keyDown(str(key))
-    elif isinstance(key, str):
-        if pyautogui.isValidKey(key):
-            pyautogui.keyDown(key)
-        else:
-            raise ValueError("Unsupported string input.")
-    else:
-        raise ValueError(INVALID_GENERIC_INPUT)
+    # if isinstance(key, _IrisKey):
+    #     pyautogui.keyDown(str(key))
+    # elif isinstance(key, str):
+    #     if pyautogui.isValidKey(key):
+    #         pyautogui.keyDown(key)
+    #     else:
+    #         raise ValueError("Unsupported string input.")
+    # else:
+    #     raise ValueError(INVALID_GENERIC_INPUT)
 
 
 def key_up(key):
@@ -290,15 +290,15 @@ def key_up(key):
     :param key: The key to be released up.
     :return: None.
     """
-    if isinstance(key, _IrisKey):
-        pyautogui.keyUp(str(key))
-    elif isinstance(key, str):
-        if pyautogui.isValidKey(key):
-            pyautogui.keyUp(key)
-        else:
-            raise ValueError("Unsupported string input.")
-    else:
-        raise ValueError(INVALID_GENERIC_INPUT)
+    # if isinstance(key, _IrisKey):
+    #     pyautogui.keyUp(str(key))
+    # elif isinstance(key, str):
+    #     if pyautogui.isValidKey(key):
+    #         pyautogui.keyUp(key)
+    #     else:
+    #         raise ValueError("Unsupported string input.")
+    # else:
+    #     raise ValueError(INVALID_GENERIC_INPUT)
 
 
 def type(text=None, modifier=None, interval=None):
@@ -314,8 +314,8 @@ def type(text=None, modifier=None, interval=None):
         if isinstance(text, _IrisKey):
             logger.debug('Scenario 1: reserved key.')
             logger.debug('Reserved key: %s' % text)
-            pyautogui.keyDown(str(text))
-            pyautogui.keyUp(str(text))
+            # pyautogui.keyDown(str(text))
+            # pyautogui.keyUp(str(text))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
         else:
             if interval is None:
@@ -323,35 +323,35 @@ def type(text=None, modifier=None, interval=None):
 
             logger.debug('Scenario 2: normal key or text block.')
             logger.debug('Text: %s' % text)
-            pyautogui.typewrite(text, interval)
+            # pyautogui.typewrite(text, interval)
     else:
         logger.debug('Scenario 3: combination of modifiers and other keys.')
         modifier_keys = KeyModifier.get_active_modifiers(modifier)
         num_keys = len(modifier_keys)
         logger.debug('Modifiers (%s): %s ' % (num_keys, ' '.join(modifier_keys)))
         logger.debug('text: %s' % text)
-        if num_keys == 1:
-            pyautogui.keyDown(modifier_keys[0])
-            time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            pyautogui.keyDown(str(text))
-            time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            pyautogui.keyUp(str(text))
-            time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            pyautogui.keyUp(modifier_keys[0])
-        elif num_keys == 2:
-            pyautogui.keyDown(modifier_keys[0])
-            time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            pyautogui.keyDown(modifier_keys[1])
-            time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            pyautogui.keyDown(str(text))
-            time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            pyautogui.keyUp(str(text))
-            time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            pyautogui.keyUp(modifier_keys[1])
-            time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            pyautogui.keyUp(modifier_keys[0])
-        else:
-            logger.error('Returned key modifiers out of range.')
+        # if num_keys == 1:
+        #     pyautogui.keyDown(modifier_keys[0])
+        #     time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
+        #     pyautogui.keyDown(str(text))
+        #     time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
+        #     pyautogui.keyUp(str(text))
+        #     time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
+        #     pyautogui.keyUp(modifier_keys[0])
+        # elif num_keys == 2:
+        #     pyautogui.keyDown(modifier_keys[0])
+        #     time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
+        #     pyautogui.keyDown(modifier_keys[1])
+        #     time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
+        #     pyautogui.keyDown(str(text))
+        #     time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
+        #     pyautogui.keyUp(str(text))
+        #     time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
+        #     pyautogui.keyUp(modifier_keys[1])
+        #     time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
+        #     pyautogui.keyUp(modifier_keys[0])
+        # else:
+        #     logger.error('Returned key modifiers out of range.')
 
     if Settings.type_delay != DEFAULT_TYPE_DELAY:
         Settings.type_delay = DEFAULT_TYPE_DELAY
