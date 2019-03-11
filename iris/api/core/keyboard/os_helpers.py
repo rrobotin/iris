@@ -11,7 +11,8 @@ import mss
 # from src.core.api.enums import OSPlatform
 # from src.core.api.errors import APIHelperError
 from iris.api.core.errors import APIHelperError
-from iris.api.core.keyboard.key import *
+#from iris.api.core.keyboard.key import OSPlatform
+# from iris.api.core.keyboard.key import *
 
 OS_NAME = mozinfo.os
 OS_VERSION = mozinfo.os_version
@@ -41,10 +42,13 @@ class OSHelper:
     def get_os():
         """Get the type of the operating system your script is running on."""
         if OS_NAME == 'win':
+            from iris.api.core.keyboard.key import OSPlatform
             return OSPlatform.WINDOWS
         elif OS_NAME == 'linux':
+            from iris.api.core.keyboard.key import OSPlatform
             return OSPlatform.LINUX
         elif OS_NAME == 'mac':
+            from iris.api.core.keyboard.key import OSPlatform
             return OSPlatform.MAC
         else:
             raise APIHelperError('Iris does not yet support your current environment: %s' % OS_NAME)
@@ -55,6 +59,7 @@ class OSHelper:
 
         :return: True if we are running on a Mac system, False otherwise.
         """
+        from iris.api.core.keyboard.key import OSPlatform
         return OSHelper.get_os() is OSPlatform.MAC
 
     @staticmethod
@@ -63,6 +68,7 @@ class OSHelper:
 
          :return: True if we are running on a Windows system, False otherwise.
         """
+        from iris.api.core.keyboard.key import OSPlatform
         return OSHelper.get_os() is OSPlatform.WINDOWS
 
     @staticmethod
@@ -71,12 +77,14 @@ class OSHelper:
 
         :return: True if we are running on a Linux system, False otherwise.
         """
+        from iris.api.core.keyboard.key import OSPlatform
         return OSHelper.get_os() is OSPlatform.LINUX
 
     @staticmethod
     def get_os_version():
         """Get the version string of the operating system your script is running on."""
         current_os = OSHelper.get_os()
+        from iris.api.core.keyboard.key import OSPlatform
         if current_os is OSPlatform.WINDOWS and OS_VERSION == '6.1':
             return 'win7'
         elif current_os is OSPlatform.MAC:

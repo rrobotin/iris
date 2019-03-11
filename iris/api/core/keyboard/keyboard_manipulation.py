@@ -2,7 +2,7 @@ import time
 
 import logging
 
-from iris.api.core.keyboard.Xkeyboard import XKeyboard
+from iris.api.core.keyboard.Xkeyboard import XKeyboard, Xscreen
 from iris.api.core.keyboard.key import KeyModifier, _IrisKey, logger
 from iris.api.core.keyboard.keyboard_api import DEFAULT_KEY_SHORTCUT_DELAY
 from iris.api.core.platform import Platform
@@ -20,6 +20,9 @@ def virtual_type(text=None, modifier=None, interval=None):
     :return: None.
     """
     logger.debug('type method: ')
+
+    fake = XKeyboard()
+
     if modifier is None:
         if isinstance(text, _IrisKey):
             logger.debug('Scenario 1: reserved key.')
@@ -41,13 +44,13 @@ def virtual_type(text=None, modifier=None, interval=None):
         logger.debug('Modifiers (%s): %s ' % (num_keys, ' '.join(modifier_keys)))
         logger.debug('text: %s' % text)
         if num_keys == 1:
-            XKeyboard.keyDown(modifier_keys[0])
+            fake.keyDown(str(modifier_keys[0]))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            XKeyboard.keyDown(str(text))
+            fake.keyDown(str(text))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            XKeyboard.keyUp(str(text))
+            fake.keyUp(str(text))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            XKeyboard.keyUp(modifier_keys[0])
+            fake.keyUp(modifier_keys[0])
         elif num_keys == 2:
             XKeyboard.keyDown(modifier_keys[0])
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)

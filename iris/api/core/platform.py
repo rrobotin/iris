@@ -27,3 +27,6 @@ class Platform(object):
     HIGH_DEF = SCREENSHOT_SIZE != pyautogui.size()
     SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
     LOW_RES = (SCREEN_WIDTH < 1280 or SCREEN_HEIGHT < 800)
+
+
+
