@@ -24,7 +24,7 @@ from iris.api.core.platform import Platform
 from parse_args import parse_args
 from version_parser import check_version
 
-SCREEN_WIDTH, SCREEN_HEIGHT = ''#pyautogui.size()
+SCREEN_WIDTH, SCREEN_HEIGHT = (0, 0)#pyautogui.size()
 SCREENSHOT_SIZE = Platform.SCREENSHOT_SIZE
 SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT = SCREENSHOT_SIZE
 
