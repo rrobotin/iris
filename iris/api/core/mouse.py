@@ -4,7 +4,7 @@
 import time
 
 import cv2
-import pyautogui
+#import pyautogui
 from pynput.mouse import Controller, Button
 
 from errors import FindError
@@ -24,7 +24,7 @@ class Mouse(object):
     @staticmethod
     def at():
         """Function returns a location object."""
-        return Location(pyautogui.position())
+        return Location(0,0)#pyautogui.position())
 
 
 def mouse_press(where=None, button=None, in_region=None):
@@ -149,16 +149,16 @@ def drag_drop(drag_from, drop_to, duration=None):
     time.sleep(Settings.UI_DELAY)
     from_location = to_location(ps=drag_from, align='center')
     _to_location = to_location(ps=drop_to, align='center')
-    pyautogui.moveTo(from_location.x, from_location.y, 0)
+    #pyautogui.moveTo(from_location.x, from_location.y, 0)
 
     time.sleep(Settings.delay_before_mouse_down)
-    pyautogui.mouseDown(button='left', _pause=False)
+    #pyautogui.mouseDown(button='left', _pause=False)
 
     time.sleep(Settings.delay_before_drag)
-    pyautogui._mouseMoveDrag('drag', _to_location.x, _to_location.y, 0, 0, duration, pyautogui.linear, 'left')
+    #pyautogui._mouseMoveDrag('drag', _to_location.x, _to_location.y, 0, 0, duration, pyautogui.linear, 'left')
 
     time.sleep(Settings.delay_before_drop)
-    pyautogui.mouseUp(button='left', _pause=False)
+    #pyautogui.mouseUp(button='left', _pause=False)
 
 
 def _mouse_press_release(where=None, action=None, button=None, in_region=None):
@@ -179,18 +179,18 @@ def _mouse_press_release(where=None, action=None, button=None, in_region=None):
         possible_offset = where.get_target_offset()
         if possible_offset is not None:
             location = Location(p_top.x + possible_offset.x, p_top.y + possible_offset.y)
-            pyautogui.moveTo(location.x, location.y)
-            if action == 'press':
-                pyautogui.mouseDown(location.x, location.y, button)
-            elif action == 'release':
-                pyautogui.mouseUp(location.x, location.y, button)
+            #pyautogui.moveTo(location.x, location.y)
+            # if action == 'press':
+            #     pyautogui.mouseDown(location.x, location.y, button)
+            # elif action == 'release':
+            #     pyautogui.mouseUp(location.x, location.y, button)
         else:
             location = Location(p_top.x + width / 2, p_top.y + height / 2)
-            pyautogui.moveTo(location.x, location.y)
-            if action == 'press':
-                pyautogui.mouseDown(location.x, location.y, button)
-            elif action == 'release':
-                pyautogui.mouseUp(location.x, location.y, button)
+            #pyautogui.moveTo(location.x, location.y)
+            # if action == 'press':
+            #     pyautogui.mouseDown(location.x, location.y, button)
+            # elif action == 'release':
+            #     pyautogui.mouseUp(location.x, location.y, button)
     elif isinstance(where, str):
         mouse = Controller()
         ocr_search = OCRSearch()
@@ -220,7 +220,7 @@ def _click_at(location=None, clicks=None, duration=None, button=None):
     if location is None:
         location = Location(0, 0)
 
-    pyautogui.moveTo(location.x, location.y, duration)
+    #pyautogui.moveTo(location.x, location.y, duration)
     if parse_args().highlight:
         hl = ScreenHighlight()
         hl.draw_circle(HighlightCircle(location.x, location.y, 15))
@@ -229,8 +229,8 @@ def _click_at(location=None, clicks=None, duration=None, button=None):
         mouse = Controller()
         mouse.position = (location.x, location.y)
         mouse.click(Button.left, 2)
-    else:
-        pyautogui.click(clicks=clicks, interval=Settings.click_delay, button=button)
+    # else:
+    #     pyautogui.click(clicks=clicks, interval=Settings.click_delay, button=button)
 
     if Settings.click_delay != DEFAULT_CLICK_DELAY:
         Settings.click_delay = DEFAULT_CLICK_DELAY
@@ -302,4 +302,4 @@ def scroll(clicks):
     :param clicks: The amount of scrolling to perform.
     :return: None.
     """
-    pyautogui.scroll(clicks)
+    #pyautogui.scroll(clicks)
