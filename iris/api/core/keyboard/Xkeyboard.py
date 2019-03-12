@@ -39,7 +39,6 @@ class XKeyboard(Xscreen):
     def __init__(self):
         self.display = Xscreen()
 
-    @staticmethod
     def keyDown(self, key):
         logger.info('KEY DOWN')
         """
@@ -71,7 +70,6 @@ class XKeyboard(Xscreen):
             fake_input(self.display, X.KeyRelease, self.keyboardMapping('shift'))
         self.display.sync()
 
-    @staticmethod
     def keyUp(self, key):
         logger.info('KEY UP')
         """
@@ -95,7 +93,6 @@ class XKeyboard(Xscreen):
 
         fake_input(self.display, X.KeyRelease, keycode)
         self.display.sync()
-
 
     def keyboardMapping(self, iriskey):
         return self.display.keysym_to_keycode(Xlib.XK.string_to_keysym(iriskey))
