@@ -11,7 +11,7 @@ import logging
 import mss
 import multiprocessing
 import numpy
-#import pyautogui
+import pyautogui
 import pytesseract
 import shutil
 import subprocess
@@ -24,7 +24,7 @@ from iris.api.core.platform import Platform
 from parse_args import parse_args
 from version_parser import check_version
 
-SCREEN_WIDTH, SCREEN_HEIGHT = (0, 0)#pyautogui.size()
+SCREEN_WIDTH, SCREEN_HEIGHT = pyautogui.size()
 SCREENSHOT_SIZE = Platform.SCREENSHOT_SIZE
 SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT = SCREENSHOT_SIZE
 
@@ -321,13 +321,13 @@ class IrisCore(object):
         else:
             if region is not None:
                 try:
-                    grabbed_area = ''#pyautogui.screenshot(region=(region.x, region.y, region.width, region.height))
+                    grabbed_area = pyautogui.screenshot(region=(region.x, region.y, region.width, region.height))
                 except (IOError, OSError):
                     logger.debug('Call to pyautogui.screnshot failed, using mss instead.')
                     grabbed_area = IrisCore._mss_screenshot(region=region)
             else:
                 try:
-                    grabbed_area = ''#pyautogui.screenshot(region=(0, 0, SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT))
+                    grabbed_area = pyautogui.screenshot(region=(0, 0, SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT))
                 except (IOError, OSError):
                     logger.debug('Call to pyautogui.screnshot failed, using mss instead.')
                     grabbed_area = IrisCore._mss_screenshot(region=region)

@@ -20,6 +20,14 @@ def virtual_type(text=None, modifier=None, interval=None):
     :return: None.
     """
     logger.debug('type method: ')
+    logger.debug(isinstance(text, _IrisKey))
+    logger.debug(type(text))
+    logger.debug('text : %s' % text)
+
+    logger.debug('type modifier: ')
+    logger.debug(isinstance(modifier, KeyModifier))
+    logger.debug(type(modifier))
+    logger.debug('modifier : %s' % modifier)
 
     fake = XKeyboard()
 

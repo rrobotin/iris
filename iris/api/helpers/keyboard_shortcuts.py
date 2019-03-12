@@ -8,7 +8,9 @@ import time
 from iris.api.core.errors import FindError, APIHelperError
 from iris.api.core.firefox_ui.library_menu import SidebarBookmarks
 from iris.api.core.firefox_ui.location_bar import LocationBar
-from iris.api.core.key import Key, KeyModifier, key_down, key_up, type
+from iris.api.core.key import key_down, key_up, type
+from iris.api.core.keyboard.key import KeyModifier, Key
+from iris.api.core.keyboard.keyboard_manipulation import virtual_type
 from iris.api.core.location import Location
 from iris.api.core.pattern import Pattern
 from iris.api.core.region import Region, click, drag_drop, find, wait, wait_vanish
@@ -40,38 +42,38 @@ Keyboard shortcuts for Navigation.
 def navigate_back():
     """Navigate back in browsing history one page visit."""
     if Settings.get_os() == Platform.MAC:
-        type(text='[', modifier=KeyModifier.CMD)
+        virtual_type(text='[', modifier=KeyModifier.CMD)
     else:
-        type(text=Key.LEFT, modifier=KeyModifier.ALT)
+        virtual_type(text=Key.LEFT, modifier=KeyModifier.ALT)
 
 
 def navigate_forward():
     """Navigate forward in browsing history one page visit."""
     if Settings.get_os() == Platform.MAC:
-        type(text=']', modifier=KeyModifier.CMD)
+        virtual_type(text=']', modifier=KeyModifier.CMD)
     else:
-        type(text=']', modifier=KeyModifier.ALT)
+        virtual_type(text=']', modifier=KeyModifier.ALT)
 
 
 def navigate_home():
     """Navigate the browser to whatever is set as the Home page."""
-    type(text=Key.HOME, modifier=KeyModifier.ALT)
+    virtual_type(text=Key.HOME, modifier=KeyModifier.ALT)
 
 
 def open_file_picker():
     """Open the system file picker."""
     if Settings.get_os() == Platform.MAC:
-        type(text='o', modifier=KeyModifier.CMD)
+        virtual_type(text='o', modifier=KeyModifier.CMD)
     else:
-        type(text='o', modifier=KeyModifier.CTRL)
+        virtual_type(text='o', modifier=KeyModifier.CTRL)
 
 
 def select_location_bar():
     """Set focus to the location bar."""
     if Settings.get_os() == Platform.MAC:
-        type(text='l', modifier=KeyModifier.CMD)
+        virtual_type(text='l', modifier=KeyModifier.CMD)
     else:
-        type(text='l', modifier=KeyModifier.CTRL)
+        virtual_type(text='l', modifier=KeyModifier.CTRL)
     # Wait to allow the location bar to become responsive.
     time.sleep(Settings.UI_DELAY)
 
@@ -79,22 +81,22 @@ def select_location_bar():
 def reload_page():
     """Reload the current web page."""
     if Settings.get_os() == Platform.MAC:
-        type(text='r', modifier=KeyModifier.CMD)
+        virtual_type(text='r', modifier=KeyModifier.CMD)
     else:
-        type(text='r', modifier=KeyModifier.CTRL)
+        virtual_type(text='r', modifier=KeyModifier.CTRL)
 
 
 def force_reload_page():
     """Reload the current web page with cache override."""
     if Settings.get_os() == Platform.MAC:
-        type(text='r', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='r', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='r', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='r', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def stop_page_load():
     """Stop the current in progress web page from loading."""
-    type(text=Key.ESC)
+    virtual_type(text=Key.ESC)
 
 
 # End of Navigation keyboard shortcuts.
@@ -108,7 +110,7 @@ def scroll_down(num=1):
     :return: None.
     """
     for x in range(num):
-        type(text=Key.DOWN)
+        virtual_type(text=Key.DOWN)
 
 
 def scroll_up(num=1):
@@ -118,87 +120,87 @@ def scroll_up(num=1):
     :return: None.
     """
     for x in range(num):
-        type(text=Key.UP)
+        virtual_type(text=Key.UP)
 
 
 def page_down():
     """Jump down one screen."""
-    type(text=Key.SPACE)
+    virtual_type(text=Key.SPACE)
 
 
 def page_up():
     """Jump up one screen."""
-    type(text=Key.SPACE, modifier=KeyModifier.SHIFT)
+    virtual_type(text=Key.SPACE, modifier=KeyModifier.SHIFT)
 
 
 def page_end():
     """Jump to the bottom of the page."""
-    type(text=Key.END)
+    virtual_type(text=Key.END)
 
 
 def page_home():
     """Jump to the top of the page."""
-    type(text=Key.HOME)
+    virtual_type(text=Key.HOME)
 
 
 def focus_next_item():
     """Focus next actionable item."""
-    type(text=Key.TAB)
+    virtual_type(text=Key.TAB)
 
 
 def focus_previous_item():
     """Focus previous actionable item."""
-    type(text=Key.TAB, modifier=KeyModifier.SHIFT)
+    virtual_type(text=Key.TAB, modifier=KeyModifier.SHIFT)
 
 
 def next_frame():
     """Move to the next frame (can be in content or in chrome)."""
-    type(text=Key.F6)
+    virtual_type(text=Key.F6)
 
 
 def previous_frame():
     """Move to the previous frame (can be in content or in chrome)."""
-    type(text=Key.F6, modifier=KeyModifier.SHIFT)
+    virtual_type(text=Key.F6, modifier=KeyModifier.SHIFT)
 
 
 def open_print_page():
     """Open the Print dialog."""
     if Settings.get_os() == Platform.MAC:
-        type(text='p', modifier=KeyModifier.CMD)
+        virtual_type(text='p', modifier=KeyModifier.CMD)
     else:
-        type(text='p', modifier=KeyModifier.CTRL)
+        virtual_type(text='p', modifier=KeyModifier.CTRL)
 
 
 def open_save_page():
     """Open the Save dialog."""
     if Settings.get_os() == Platform.MAC:
-        type(text='s', modifier=KeyModifier.CMD)
+        virtual_type(text='s', modifier=KeyModifier.CMD)
     else:
-        type(text='s', modifier=KeyModifier.CTRL)
+        virtual_type(text='s', modifier=KeyModifier.CTRL)
 
 
 def zoom_in():
     """Zoom in one increment."""
     if Settings.get_os() == Platform.MAC:
-        type(text='+', modifier=KeyModifier.CMD)
+        virtual_type(text='+', modifier=KeyModifier.CMD)
     else:
-        type(text='+', modifier=KeyModifier.CTRL)
+        virtual_type(text='+', modifier=KeyModifier.CTRL)
 
 
 def zoom_out():
     """Zoom out one increment."""
     if Settings.get_os() == Platform.MAC:
-        type(text='-', modifier=KeyModifier.CMD)
+        virtual_type(text='-', modifier=KeyModifier.CMD)
     else:
-        type(text='-', modifier=KeyModifier.CTRL)
+        virtual_type(text='-', modifier=KeyModifier.CTRL)
 
 
 def restore_zoom():
     """Restores zoom level to page default."""
     if Settings.get_os() == Platform.MAC:
-        type(text='0', modifier=KeyModifier.CMD)
+        virtual_type(text='0', modifier=KeyModifier.CMD)
     else:
-        type(text='0', modifier=KeyModifier.CTRL)
+        virtual_type(text='0', modifier=KeyModifier.CTRL)
 
 
 # End of Current Page keyboard shortcuts.
@@ -208,17 +210,17 @@ def restore_zoom():
 def edit_copy():
     """Copy selection to clipboard."""
     if Settings.get_os() == Platform.MAC:
-        type(text='c', modifier=KeyModifier.CMD)
+        virtual_type(text='c', modifier=KeyModifier.CMD)
     else:
-        type(text='c', modifier=KeyModifier.CTRL)
+        virtual_type(text='c', modifier=KeyModifier.CTRL)
 
 
 def edit_cut():
     """Cut selection to clipboard."""
     if Settings.get_os() == Platform.MAC:
-        type(text='x', modifier=KeyModifier.CMD)
+        virtual_type(text='x', modifier=KeyModifier.CMD)
     else:
-        type(text='x', modifier=KeyModifier.CTRL)
+        virtual_type(text='x', modifier=KeyModifier.CTRL)
 
 
 def edit_delete():
@@ -226,58 +228,58 @@ def edit_delete():
 
     If nothing is selected, delete previous character.
     """
-    type(text=Key.DELETE)
+    virtual_type(text=Key.DELETE)
 
 
 def delete_selected_file():
     """Delete selected file/files inside a folder."""
     if Settings.get_os() == Platform.MAC:
-        type(text=Key.BACKSPACE, modifier=KeyModifier.CMD)
+        virtual_type(text=Key.BACKSPACE, modifier=KeyModifier.CMD)
     elif Settings.get_os_version() == 'win7':
-        type(text=Key.DELETE)
-        type(text='y')
+        virtual_type(text=Key.DELETE)
+        virtual_type(text='y')
     else:
-        type(text=Key.DELETE)
+        virtual_type(text=Key.DELETE)
 
 
 def edit_paste():
     """Paste contents of the clipboard to the focused text field."""
     if Settings.get_os() == Platform.MAC:
-        type(text='v', modifier=KeyModifier.CMD)
+        virtual_type(text='v', modifier=KeyModifier.CMD)
     else:
-        type(text='v', modifier=KeyModifier.CTRL)
+        virtual_type(text='v', modifier=KeyModifier.CTRL)
 
 
 def edit_paste_plain():
     """Paste contents of the clipboard, as plain text, to the focused text field."""
     if Settings.get_os() == Platform.MAC:
-        type(text='v', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='v', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='v', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='v', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def edit_redo():
     """Redo the last operation of Undo."""
     if Settings.get_os() == Platform.MAC:
-        type(text='z', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='z', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='z', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='z', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def edit_select_all():
     """Selects the entire contents of focused field or page."""
     if Settings.get_os() == Platform.MAC:
-        type(text='a', modifier=KeyModifier.CMD)
+        virtual_type(text='a', modifier=KeyModifier.CMD)
     else:
-        type(text='a', modifier=KeyModifier.CTRL)
+        virtual_type(text='a', modifier=KeyModifier.CTRL)
 
 
 def edit_undo():
     """Undoes the previous operation."""
     if Settings.get_os() == Platform.MAC:
-        type(text='z', modifier=KeyModifier.CMD)
+        virtual_type(text='z', modifier=KeyModifier.CMD)
     else:
-        type(text='z', modifier=KeyModifier.CTRL)
+        virtual_type(text='z', modifier=KeyModifier.CTRL)
 
 
 # End of Editing keyboard shortcuts.
@@ -287,9 +289,9 @@ def edit_undo():
 def open_find():
     """Open the find toolbar."""
     if Settings.get_os() == Platform.MAC:
-        type(text='f', modifier=KeyModifier.CMD)
+        virtual_type(text='f', modifier=KeyModifier.CMD)
     else:
-        type(text='f', modifier=KeyModifier.CTRL)
+        virtual_type(text='f', modifier=KeyModifier.CTRL)
 
 
 def find_next():
@@ -298,9 +300,9 @@ def find_next():
     Find next (again) can also find the next occurrence of a term without opening the find toolbar.
     """
     if Settings.get_os() == Platform.MAC:
-        type(text='g', modifier=KeyModifier.CMD)
+        virtual_type(text='g', modifier=KeyModifier.CMD)
     else:
-        type(text='g', modifier=KeyModifier.CTRL)
+        virtual_type(text='g', modifier=KeyModifier.CTRL)
 
 
 def find_previous():
@@ -309,38 +311,38 @@ def find_previous():
     Find previous can also find the previous occurrence of a term without opening the find toolbar.
     """
     if Settings.get_os() == Platform.MAC:
-        type(text='g', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='g', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='g', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='g', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def quick_find():
     """Quick find opens simple find toolbar that remains active for only six seconds."""
     if Settings.get_os() == Platform.MAC:
-        type(text='/', modifier=KeyModifier.CMD)
+        virtual_type(text='/', modifier=KeyModifier.CMD)
     else:
-        type(text='/', modifier=KeyModifier.CTRL)
+        virtual_type(text='/', modifier=KeyModifier.CTRL)
 
 
 def quick_find_link():
     """Quick find opens simple find link toolbar that remains active for only six seconds."""
     if Settings.get_os() == Platform.MAC:
-        type(text="'", modifier=KeyModifier.CMD)
+        virtual_type(text="'", modifier=KeyModifier.CMD)
     else:
-        type(text="'", modifier=KeyModifier.CTRL)
+        virtual_type(text="'", modifier=KeyModifier.CTRL)
 
 
 def close_find():
     """Close the regular find toolbar or quick find toolbar, if it has focus."""
-    type(text=Key.ESC)
+    virtual_type(text=Key.ESC)
 
 
 def select_search_bar():
     """If the search bar is present, select the search bar, otherwise this selects the location bar."""
     if Settings.get_os() == Platform.MAC:
-        type(text='k', modifier=KeyModifier.CMD)
+        virtual_type(text='k', modifier=KeyModifier.CMD)
     else:
-        type(text='k', modifier=KeyModifier.CTRL)
+        virtual_type(text='k', modifier=KeyModifier.CTRL)
 
 
 def change_search_next():
@@ -349,9 +351,9 @@ def change_search_next():
     (side effect: this also opens the search engine manager, if it wasn't already open).
     """
     if Settings.get_os() == Platform.MAC:
-        type(text=Key.DOWN, modifier=KeyModifier.CMD)
+        virtual_type(text=Key.DOWN, modifier=KeyModifier.CMD)
     else:
-        type(text=Key.DOWN, modifier=KeyModifier.CTRL)
+        virtual_type(text=Key.DOWN, modifier=KeyModifier.CTRL)
 
 
 def change_search_previous():
@@ -360,14 +362,14 @@ def change_search_previous():
     (side effect: this also opens the search engine manager, if it wasn't already open).
     """
     if Settings.get_os() == Platform.MAC:
-        type(text=Key.UP, modifier=KeyModifier.CMD)
+        virtual_type(text=Key.UP, modifier=KeyModifier.CMD)
     else:
-        type(text=Key.UP, modifier=KeyModifier.CTRL)
+        virtual_type(text=Key.UP, modifier=KeyModifier.CTRL)
 
 
 def open_search_manager():
     """If the search bar has focus, open the search engine manager."""
-    type(text=Key.DOWN, modifier=KeyModifier.ALT)
+    virtual_type(text=Key.DOWN, modifier=KeyModifier.ALT)
 
 
 # End of Search keyboard shortcuts.
@@ -378,39 +380,39 @@ def open_search_manager():
 def close_tab():
     """Close the currently focused tab/window (Except for app tabs)."""
     if Settings.get_os() == Platform.MAC:
-        type(text='w', modifier=KeyModifier.CMD)
+        virtual_type(text='w', modifier=KeyModifier.CMD)
     else:
-        type(text='w', modifier=KeyModifier.CTRL)
+        virtual_type(text='w', modifier=KeyModifier.CTRL)
 
 
 def close_window():
     """Close the currently focused window."""
     if Settings.get_os() == Platform.MAC:
-        type(text='w', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='w', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='w', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='w', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def force_close():
     """Move to the previous frame (can be in content or in chrome)."""
-    type(text=Key.F4, modifier=KeyModifier.ALT)
-    type(text='u', modifier=KeyModifier.CTRL)
+    virtual_type(text=Key.F4, modifier=KeyModifier.ALT)
+    virtual_type(text='u', modifier=KeyModifier.CTRL)
 
 
 def change_window_view():
     """Change the focus on another window."""
     if Settings.get_os() == Platform.MAC:
-        type(text=Key.TAB, modifier=KeyModifier.CMD)
+        virtual_type(text=Key.TAB, modifier=KeyModifier.CMD)
     else:
-        type(text=Key.TAB, modifier=KeyModifier.ALT)
+        virtual_type(text=Key.TAB, modifier=KeyModifier.ALT)
 
 
 def full_screen():
     """Toggle full screen mode."""
     if Settings.get_os() == Platform.MAC:
-        type(text='f', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='f', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text=Key.F11)
+        virtual_type(text=Key.F11)
 
 
 def maximize_window():
@@ -433,14 +435,17 @@ def maximize_window():
 
         # Alt key changes maximize button from full screen to maximize window.
         maximize_button = window_controls_pattern.target_offset(width - 3, height / 2)
-        key_down(Key.ALT)
+        from iris.api.core.keyboard import Xkeyboard
+        from iris.api.core.keyboard.Xkeyboard import XKeyboard
+        fake = XKeyboard()
+        Xkeyboard.XKeyboard.keyDown(fake, Key.ALT)
         click(maximize_button)
-        key_up(Key.ALT)
+        Xkeyboard.XKeyboard.keyUp(fake, Key.ALT)
 
     elif Settings.is_windows():
-        type(text=Key.UP, modifier=KeyModifier.WIN)
+        virtual_type(text=Key.UP, modifier=KeyModifier.WIN)
     else:
-        type(text=Key.UP, modifier=KeyModifier.CTRL + KeyModifier.META)
+        virtual_type(text=Key.UP, modifier=KeyModifier.CTRL + KeyModifier.META)
     # Wait to allow window to be maximized.
     time.sleep(Settings.UI_DELAY)
 
@@ -448,11 +453,11 @@ def maximize_window():
 def minimize_window():
     """Minimize the browser window to the application launch bar."""
     if Settings.get_os() == Platform.MAC:
-        type(text='m', modifier=KeyModifier.CMD)
+        virtual_type(text='m', modifier=KeyModifier.CMD)
     elif Settings.get_os() == Platform.WINDOWS:
-        type(text=Key.DOWN, modifier=KeyModifier.WIN)
+        virtual_type(text=Key.DOWN, modifier=KeyModifier.WIN)
     else:
-        type(text=Key.DOWN, modifier=KeyModifier.CTRL + KeyModifier.META)
+        virtual_type(text=Key.DOWN, modifier=KeyModifier.CTRL + KeyModifier.META)
     # Wait to allow window to be minimized.
     time.sleep(Settings.UI_DELAY)
 
@@ -460,9 +465,9 @@ def minimize_window():
 def new_tab():
     """Open a new browser tab."""
     if Settings.get_os() == Platform.MAC:
-        type(text='t', modifier=KeyModifier.CMD)
+        virtual_type(text='t', modifier=KeyModifier.CMD)
     else:
-        type(text='t', modifier=KeyModifier.CTRL)
+        virtual_type(text='t', modifier=KeyModifier.CTRL)
     # Wait to allow new tab to be opened.
     time.sleep(Settings.FX_DELAY)
 
@@ -470,27 +475,27 @@ def new_tab():
 def new_window():
     """Open a new browser window."""
     if Settings.get_os() == Platform.MAC:
-        type(text='n', modifier=KeyModifier.CMD)
+        virtual_type(text='n', modifier=KeyModifier.CMD)
     else:
-        type(text='n', modifier=KeyModifier.CTRL)
+        virtual_type(text='n', modifier=KeyModifier.CTRL)
 
 
 def new_private_window():
     """Open a new private browser window."""
     if Settings.get_os() == Platform.MAC:
-        type(text='p', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='p', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='p', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='p', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def next_tab():
     """Focus the next tab (one over to the right)."""
-    type(text=Key.TAB, modifier=KeyModifier.CTRL)
+    virtual_type(text=Key.TAB, modifier=KeyModifier.CTRL)
 
 
 def previous_tab():
     """Focus the previous tab (one over to the left)."""
-    type(text=Key.TAB, modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+    virtual_type(text=Key.TAB, modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def quit_firefox():
@@ -499,11 +504,11 @@ def quit_firefox():
     # Wait before quiting Firefox to avoid concurrency.
     time.sleep(Settings.FX_DELAY)
     if Settings.get_os() == Platform.MAC:
-        type(text='q', modifier=KeyModifier.CMD)
+        virtual_type(text='q', modifier=KeyModifier.CMD)
     elif Settings.get_os() == Platform.WINDOWS:
-        type(text='w', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='w', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
     else:
-        type(text='q', modifier=KeyModifier.CTRL)
+        virtual_type(text='q', modifier=KeyModifier.CTRL)
 
 
 def select_tab(num):
@@ -512,42 +517,42 @@ def select_tab(num):
     param:  num  is a string 1-8. example: '4'.
     """
     if Settings.get_os() == Platform.MAC:
-        type(text=num, modifier=KeyModifier.CMD)
+        virtual_type(text=num, modifier=KeyModifier.CMD)
     elif Settings.get_os() == Platform.WINDOWS:
-        type(text=num, modifier=KeyModifier.CTRL)
+        virtual_type(text=num, modifier=KeyModifier.CTRL)
     else:
-        type(text=num, modifier=KeyModifier.ALT)
+        virtual_type(text=num, modifier=KeyModifier.ALT)
 
 
 def select_last_tab():
     """Select the last tab."""
     if Settings.get_os() == Platform.MAC:
-        type(text='9', modifier=KeyModifier.CMD)
+        virtual_type(text='9', modifier=KeyModifier.CMD)
     elif Settings.get_os() == Platform.WINDOWS:
-        type(text='9', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='9', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
     else:
-        type(text='9', modifier=KeyModifier.CTRL)
+        virtual_type(text='9', modifier=KeyModifier.CTRL)
 
 
 def toggle_audio():
     """Mute/Unmute audio."""
-    type(text='m', modifier=KeyModifier.CTRL)
+    virtual_type(text='m', modifier=KeyModifier.CTRL)
 
 
 def undo_close_tab():
     """Re-opens the previously closed tab."""
     if Settings.get_os() == Platform.MAC:
-        type(text='t', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='t', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='t', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='t', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def undo_close_window():
     """Re-opens the previously closed browser window."""
     if Settings.get_os() == Platform.MAC:
-        type(text='n', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='n', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='n', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='n', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 # End of Windows & Tabs keyboard shortcuts.
@@ -557,25 +562,25 @@ def undo_close_window():
 def history_sidebar():
     """Toggle open/close the history sidebar."""
     if Settings.get_os() == Platform.MAC:
-        type(text='h', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='h', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='h', modifier=KeyModifier.CTRL)
+        virtual_type(text='h', modifier=KeyModifier.CTRL)
 
 
 def clear_recent_history():
     """Open the Clear Recent History dialog."""
     if Settings.get_os() == Platform.MAC:
-        type(text=Key.DELETE, modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text=Key.DELETE, modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text=Key.DELETE, modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text=Key.DELETE, modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def bookmark_all_tabs():
     """Open the Bookmark All Tabs dialog."""
     if Settings.get_os() == Platform.MAC:
-        type(text='d', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='d', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='d', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='d', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
     # Wait for the Bookmark All Tabs dialog to be opened.
     time.sleep(Settings.UI_DELAY_LONG)
 
@@ -583,9 +588,9 @@ def bookmark_all_tabs():
 def bookmark_page():
     """Bookmark the current page."""
     if Settings.get_os() == Platform.MAC:
-        type(text='d', modifier=KeyModifier.CMD)
+        virtual_type(text='d', modifier=KeyModifier.CMD)
     else:
-        type(text='d', modifier=KeyModifier.CTRL)
+        virtual_type(text='d', modifier=KeyModifier.CTRL)
     try:
         wait(LocationBar.STAR_BUTTON_STARRED, 10)
         logger.debug('Page was successfully bookmarked')
@@ -596,9 +601,9 @@ def bookmark_page():
 def bookmarks_sidebar(option):
     """Toggle open/close the bookmarks sidebar."""
     if Settings.get_os() == Platform.MAC:
-        type(text='b', modifier=KeyModifier.CMD)
+        virtual_type(text='b', modifier=KeyModifier.CMD)
     else:
-        type(text='b', modifier=KeyModifier.CTRL)
+        virtual_type(text='b', modifier=KeyModifier.CTRL)
 
     bookmark_sidebar_header_pattern = SidebarBookmarks.BOOKMARKS_HEADER
     if option == 'open':
@@ -620,11 +625,11 @@ def bookmarks_sidebar(option):
 def open_library():
     """Open the Library window."""
     if Settings.get_os() == Platform.MAC:
-        type(text='b', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='b', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     elif Settings.get_os() == Platform.WINDOWS:
-        type(text='b', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='b', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
     else:
-        type(text='o', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='o', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 # End History & Bookmarks keyboard shortcuts.
@@ -634,42 +639,42 @@ def open_library():
 def open_addons():
     """Open the Add-ons Manager page."""
     if Settings.get_os() == Platform.MAC:
-        type(text='a', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text='a', modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text='a', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='a', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def open_downloads():
     """Open the Downloads dialog."""
     if Settings.get_os() == Platform.MAC:
-        type(text='j', modifier=KeyModifier.CMD)
+        virtual_type(text='j', modifier=KeyModifier.CMD)
     elif Settings.get_os() == Platform.WINDOWS:
-        type(text='j', modifier=KeyModifier.CTRL)
+        virtual_type(text='j', modifier=KeyModifier.CTRL)
     else:
-        type(text='y', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='y', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def open_page_source():
     """Open the current page's page source."""
     if Settings.get_os() == Platform.MAC:
-        type(text='u', modifier=KeyModifier.CMD)
+        virtual_type(text='u', modifier=KeyModifier.CMD)
     else:
-        type(text='u', modifier=KeyModifier.CTRL)
+        virtual_type(text='u', modifier=KeyModifier.CTRL)
 
 
 def open_web_console():
     """Opens the Web Console."""
     if Settings.get_os() == Platform.MAC:
-        type(text='k', modifier=KeyModifier.CMD + KeyModifier.ALT)
+        virtual_type(text='k', modifier=KeyModifier.CMD + KeyModifier.ALT)
     else:
-        type(text='k', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text='k', modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def open_web_developer_menu():
     """
     Open the Web_developer tool.
     """
-    type(text=Key.F2, modifier=KeyModifier.SHIFT)
+    virtual_type(text=Key.F2, modifier=KeyModifier.SHIFT)
 
 
 def open_browser_console():
@@ -677,9 +682,9 @@ def open_browser_console():
     Opens the Browser Console.
     """
     if Settings.get_os() == "osx":
-        type(text="j", modifier=KeyModifier.CMD + KeyModifier.SHIFT)
+        virtual_type(text="j", modifier=KeyModifier.CMD + KeyModifier.SHIFT)
     else:
-        type(text="j", modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
+        virtual_type(text="j", modifier=KeyModifier.CTRL + KeyModifier.SHIFT)
 
 
 def restart_via_console():
@@ -687,8 +692,8 @@ def restart_via_console():
      restarts Firefox if web console is opened
     """
     if Settings.get_os() == Platform.MAC:
-        type(text='r', modifier=KeyModifier.CMD + KeyModifier.ALT)
+        virtual_type(text='r', modifier=KeyModifier.CMD + KeyModifier.ALT)
     else:
-        type(text='r', modifier=KeyModifier.CTRL + KeyModifier.ALT)
+        virtual_type(text='r', modifier=KeyModifier.CTRL + KeyModifier.ALT)
 
 # End Tools keyboard shortcuts

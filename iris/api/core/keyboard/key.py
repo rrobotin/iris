@@ -43,7 +43,7 @@ class Key(object):
     ALT = _IrisKey('alt', 1 << 3, 'Alt_L')
     BACKSPACE = _IrisKey('backspace', None, 'BackSpace')
     CAPS_LOCK = _IrisKey('capslock', None, 'Caps_Lock')
-    CMD = _IrisKey('command', 1 << 2)
+    CMD = _IrisKey('command', 1 << 2, 'Command')
     CTRL = _IrisKey('ctrl', 1 << 1, 'Control_L')
     DELETE = _IrisKey('del', None, 'Delete')
     DIVIDE = _IrisKey('divide', None, 'KP_Divide')
@@ -232,7 +232,7 @@ class KeyModifier(object):
     """Keyboard key variables."""
     SHIFT = Key.SHIFT.value
     CTRL = Key.CTRL.value
-    CMD = Key.CMD.value
+    CMD = Key.CMD.x11key
     WIN = Key.WIN.value
     META = Key.META.value
     ALT = Key.ALT.value
