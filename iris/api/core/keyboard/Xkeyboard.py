@@ -9,6 +9,9 @@ from Xlib import X
 from Xlib.ext.xtest import fake_input
 import Xlib.XK
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class Xscreen:
 
@@ -30,68 +33,67 @@ class Xscreen:
         return self.display.screen().width_in_pixels, self.display.screen().height_in_pixels
 
 
-class XKeyboard(Xscreen):
 
-    def __init__(self):
+display = Xscreen()
 
-        self.display = Xscreen()
+def keyDown(key):
+    logger.info('KEY DOWN')
+    """
+    Performs a keyboard key press without the release. This will put that
+    key in a held down state.
 
-    def keyDown(self, key):
-        """
-        Performs a keyboard key press without the release. This will put that
-        key in a held down state.
+    Args:
+      key (str): The key to be pressed down. The valid names are listed in
+      Key class
 
-        Args:
-          key (str): The key to be pressed down. The valid names are listed in
-          Key class
+    Returns:
+      None
+    """
+    if keyboardMapping(key) is None:
+        return
 
-        Returns:
-          None
-        """
-        if self.keyboardMapping(key) is None:
-            return
+    if type(key) == int:
+        fake_input(display, X.KeyPress, key)
+        display.sync()
+        return
 
-        if type(key) == int:
-            fake_input(self.display, X.KeyPress, key)
-            self.display.sync()
-            return
+    needsShift = isShiftCharacter(key)
+    if needsShift:
+        fake_input(display, X.KeyPress, keyboardMapping('shift'))
 
-        needsShift = isShiftCharacter(key)
-        if needsShift:
-            fake_input(self.display, X.KeyPress, self.keyboardMapping('shift'))
+    fake_input(display, X.KeyPress, keyboardMapping(key))
 
-        fake_input(self.display, X.KeyPress, self.keyboardMapping(key))
+    if needsShift:
+        fake_input(display, X.KeyRelease, keyboardMapping('shift'))
+    display.sync()
 
-        if needsShift:
-            fake_input(self.display, X.KeyRelease, self.keyboardMapping('shift'))
-        self.display.sync()
+def keyUp(key):
+    logger.info('KEY UP')
+    """
+    Performs a keyboard key release (without the press down beforehand).
 
-    def keyUp(self, key):
-        """
-        Performs a keyboard key release (without the press down beforehand).
+    Args:
+      key (str): The key to be released up. The valid names are listed in
+      Key Class
 
-        Args:
-          key (str): The key to be released up. The valid names are listed in
-          Key Class
+    Returns:
+      None
+    """
 
-        Returns:
-          None
-        """
+    if keyboardMapping(key) is None:
+        return
 
-        if self.keyboardMapping(key) is None:
-            return
+    if type(key) == int:
+        keycode = key
+    else:
+        keycode = keyboardMapping(key)
 
-        if type(key) == int:
-            keycode = key
-        else:
-            keycode = self.keyboardMapping(key)
+    fake_input(display, X.KeyRelease, keycode)
+    display.sync()
 
-        fake_input(self.display, X.KeyRelease, keycode)
-        self.display.sync()
+def keyboardMapping(self, iriskey):
 
-    def keyboardMapping(self, iriskey):
-
-        return self.display.keysym_to_keycode(Xlib.XK.string_to_keysym(iriskey))
+    return self.display.keysym_to_keycode(Xlib.XK.string_to_keysym(iriskey))
 
 
 @staticmethod

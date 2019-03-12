@@ -47,6 +47,7 @@ def run(master_tests_list, test_list, browser):
             current.setup()
 
             try:
+                logger.info('MAKE PROFILE')
                 profile = Profile.make_profile(current.profile)
                 current.profile_path = profile
                 profile.set_preferences(current.prefs)

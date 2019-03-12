@@ -9,6 +9,7 @@ from iris.test_case import *
 class Test(BaseTest):
 
     def __init__(self):
+        logger.info('SETTING UP TEST')
         BaseTest.__init__(self)
         self.meta = 'Test fake keyboards.'
         self.test_case_id = '____id____'

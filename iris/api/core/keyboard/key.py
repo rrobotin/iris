@@ -258,6 +258,7 @@ class KeyModifier(object):
 
         active_modifiers = []
         for item in all_modifiers:
+            logger.debug('Item: %s' % item)
             if item.value & value:
                 active_modifiers.append(item.label)
         return active_modifiers

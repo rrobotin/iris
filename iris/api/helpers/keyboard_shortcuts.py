@@ -420,6 +420,8 @@ def maximize_window():
 
     This is NOT Full Screen mode.
     """
+
+    logger.info('MAXIMIZE WINDOW')
     if Settings.is_mac():
         # There is no keyboard shortcut for this on Mac. We'll do it the old fashioned way.
         # This image is of the three window control buttons at top left of the window.
@@ -435,12 +437,13 @@ def maximize_window():
 
         # Alt key changes maximize button from full screen to maximize window.
         maximize_button = window_controls_pattern.target_offset(width - 3, height / 2)
+        logger.info('MAXIMIZE BUTTON: %s' % maximize_button)
         from iris.api.core.keyboard import Xkeyboard
         from iris.api.core.keyboard.Xkeyboard import XKeyboard
-        fake = XKeyboard()
-        Xkeyboard.XKeyboard.keyDown(fake, Key.ALT)
+        #fake = XKeyboard()
+        Xkeyboard.keyDown(Key.ALT)
         click(maximize_button)
-        Xkeyboard.XKeyboard.keyUp(fake, Key.ALT)
+        Xkeyboard.keyUp(Key.ALT)
 
     elif Settings.is_windows():
         virtual_type(text=Key.UP, modifier=KeyModifier.WIN)

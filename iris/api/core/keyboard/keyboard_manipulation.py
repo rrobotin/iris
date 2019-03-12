@@ -36,7 +36,7 @@ def virtual_type(text=None, modifier=None, interval=None):
             logger.debug('Scenario 1: reserved key.')
             logger.debug('Reserved key: %s' % text)
             XKeyboard.keyDown(str(text))
-            XKeyboard.keyUp(str(text))
+            fake.keyUp(str(text))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
         else:
             if interval is None:
