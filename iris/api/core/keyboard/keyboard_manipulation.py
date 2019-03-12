@@ -2,13 +2,16 @@ import time
 
 import logging
 
-from iris.api.core.keyboard.Xkeyboard import XKeyboard, Xscreen
+from iris.api.core.keyboard.Xkeyboard import XKeyboard
 from iris.api.core.keyboard.key import KeyModifier, _IrisKey, logger
 from iris.api.core.keyboard.keyboard_api import DEFAULT_KEY_SHORTCUT_DELAY
 from iris.api.core.platform import Platform
 from iris.api.core.settings import Settings, DEFAULT_TYPE_DELAY
 
 logger = logging.getLogger(__name__)
+
+
+fake_Keyboard = XKeyboard()
 
 
 def virtual_type(text=None, modifier=None, interval=None):
@@ -29,14 +32,13 @@ def virtual_type(text=None, modifier=None, interval=None):
     logger.debug(type(modifier))
     logger.debug('modifier : %s' % modifier)
 
-    fake = XKeyboard()
-
     if modifier is None:
+
         if isinstance(text, _IrisKey):
             logger.debug('Scenario 1: reserved key.')
             logger.debug('Reserved key: %s' % text)
-            XKeyboard.keyDown(str(text))
-            fake.keyUp(str(text))
+            fake_Keyboard.keyDown(str(text))
+            fake_Keyboard.keyUp(str(text))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
         else:
             if interval is None:
@@ -52,25 +54,25 @@ def virtual_type(text=None, modifier=None, interval=None):
         logger.debug('Modifiers (%s): %s ' % (num_keys, ' '.join(modifier_keys)))
         logger.debug('text: %s' % text)
         if num_keys == 1:
-            fake.keyDown(str(modifier_keys[0]))
+            fake_Keyboard.keyDown(str(modifier_keys[0]))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            fake.keyDown(str(text))
+            fake_Keyboard.keyDown(str(text))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            fake.keyUp(str(text))
+            fake_Keyboard.keyUp(str(text))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            fake.keyUp(modifier_keys[0])
+            fake_Keyboard.keyUp(modifier_keys[0])
         elif num_keys == 2:
-            XKeyboard.keyDown(modifier_keys[0])
+            fake_Keyboard.keyDown(modifier_keys[0])
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            XKeyboard.keyDown(modifier_keys[1])
+            fake_Keyboard.keyDown(modifier_keys[1])
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            XKeyboard.keyDown(str(text))
+            fake_Keyboard.keyDown(str(text))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            XKeyboard.keyUp(str(text))
+            fake_Keyboard.keyUp(str(text))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            XKeyboard.keyUp(modifier_keys[1])
+            fake_Keyboard.keyUp(modifier_keys[1])
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
-            XKeyboard.keyUp(modifier_keys[0])
+            fake_Keyboard.keyUp(modifier_keys[0])
         else:
             logger.error('Returned key modifiers out of range.')
 

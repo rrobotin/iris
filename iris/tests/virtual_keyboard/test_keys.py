@@ -22,7 +22,7 @@ class Test(BaseTest):
             clear_recent_history_last_hour_pattern = History.CLearRecentHistory.TimeRange.CLEAR_CHOICE_LAST_HOUR
 
         # Open some pages to create some history.
-        #new_tab_virtual()
+        new_tab_virtual()
         navigate(LocalWeb.MOZILLA_TEST_SITE)
         expected_1 = exists(LocalWeb.MOZILLA_LOGO, 10)
         assert_true(self, expected_1, 'Mozilla page loaded successfully.')
