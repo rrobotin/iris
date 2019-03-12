@@ -14,30 +14,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Xscreen:
+class XKeyboard(object):
 
     def __init__(self):
-        """
-        Initializing a X Display that will be used for screenshot , keyboard and mouse
-        actions in a framebuffer environment
-
-        """
-
         self.display = Display(os.environ['DISPLAY'])
-
-    def _screen_size(self):
-        """
-            Returns:
-                 Screen Width and Height of the virtual screen
-        """
-
-        return self.display.screen().width_in_pixels, self.display.screen().height_in_pixels
-
-
-class XKeyboard(Xscreen):
-
-    def __init__(self):
-        self.display = Xscreen()
 
     def keyDown(self, key):
         logger.info('KEY DOWN')
@@ -97,8 +77,15 @@ class XKeyboard(Xscreen):
     def keyboardMapping(self, iriskey):
         return self.display.keysym_to_keycode(Xlib.XK.string_to_keysym(iriskey))
 
+    def _screen_size(self):
+        """
+            Returns:
+                 Screen Width and Height of the virtual screen
+        """
 
-@staticmethod
+        return self.display.screen().width_in_pixels, self.display.screen().height_in_pixels
+
+
 def isShiftCharacter(character):
     """
     Returns True if the key character is uppercase or shifted.
