@@ -25,9 +25,9 @@ mozrunner = "==7.3.0"
 mss = "==3.3.1"
 pep8 = "*"
 # Platform dependencies
-python-xlib = "==0.25"
+xlib = "==0.21"
 
 [dev-packages]
 
 [requires]
-python_version = "2.7"
+python_version = "2.7.16"
