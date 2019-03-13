@@ -437,10 +437,8 @@ def maximize_window():
 
         # Alt key changes maximize button from full screen to maximize window.
         maximize_button = window_controls_pattern.target_offset(width - 3, height / 2)
-        logger.info('MAXIMIZE BUTTON: %s' % maximize_button)
+        logger.info(': %s' % maximize_button)
         from iris.api.core.keyboard import Xkeyboard
-        from iris.api.core.keyboard.Xkeyboard import XKeyboard
-        #fake = XKeyboard()
         Xkeyboard.keyDown(Key.ALT)
         click(maximize_button)
         Xkeyboard.keyUp(Key.ALT)

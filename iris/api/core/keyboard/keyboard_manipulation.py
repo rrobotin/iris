@@ -22,18 +22,14 @@ def virtual_type(text=None, modifier=None, interval=None):
     :param interval: The number of seconds in between each press. By default it is 0 seconds.
     :return: None.
     """
-    logger.debug('type method: ')
-    logger.debug(isinstance(text, _IrisKey))
-    logger.debug(type(text))
-    logger.debug('text : %s' % text)
 
-    logger.debug('type modifier: ')
-    logger.debug(isinstance(modifier, KeyModifier))
-    logger.debug(type(modifier))
+    logger.debug('text : %s' % text)
+    logger.debug(type(text))
+
     logger.debug('modifier : %s' % modifier)
+    logger.debug(type(modifier))
 
     if modifier is None:
-
         if isinstance(text, _IrisKey):
             logger.debug('Scenario 1: reserved key.')
             logger.debug('Reserved key: %s' % text)
@@ -49,6 +45,7 @@ def virtual_type(text=None, modifier=None, interval=None):
             XKeyboard.typewrite(text, interval)
     else:
         logger.debug('Scenario 3: combination of modifiers and other keys.')
+
         modifier_keys = KeyModifier.get_active_modifiers(modifier)
         num_keys = len(modifier_keys)
         logger.debug('Modifiers (%s): %s ' % (num_keys, ' '.join(modifier_keys)))

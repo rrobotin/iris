@@ -66,15 +66,19 @@ class XKeyboard(object):
         if self.keyboardMapping(key) is None:
             return
 
+        logger.debug('type(key) %s: ' % type(key))
         if type(key) == int:
             keycode = key
         else:
             keycode = self.keyboardMapping(key)
 
+        logger.debug('keycode %s: ' % keycode)
+
         fake_input(self.display, X.KeyRelease, keycode)
         self.display.sync()
 
     def keyboardMapping(self, iriskey):
+        logger.debug('keyboardMapping')
         return self.display.keysym_to_keycode(Xlib.XK.string_to_keysym(iriskey))
 
     def _screen_size(self):
@@ -90,4 +94,5 @@ def isShiftCharacter(character):
     """
     Returns True if the key character is uppercase or shifted.
     """
+    logger.debug('isShiftCharacter')
     return character.isupper() or character in '~!@#$%^&*()_+{}|:"<>?'

@@ -69,7 +69,7 @@ class Key(object):
     HOME = _IrisKey('home', None, 'Home')
     INSERT = _IrisKey('insert', None, 'Insert')
     LEFT = _IrisKey('left', None, 'Left')
-    META = _IrisKey('winleft', 1 << 2)
+    META = _IrisKey('winleft', 1 << 2, 'Super_L')
     MINUS = _IrisKey('subtract', None)
     MULTIPLY = _IrisKey('multiply', None, 'KP_Multiply')
     NUM0 = _IrisKey('num0', None, 'KP_0')
@@ -232,7 +232,7 @@ class KeyModifier(object):
     """Keyboard key variables."""
     SHIFT = Key.SHIFT.value
     CTRL = Key.CTRL.value
-    CMD = Key.CMD.x11key
+    CMD = Key.CMD.value
     WIN = Key.WIN.value
     META = Key.META.value
     ALT = Key.ALT.value
@@ -257,10 +257,13 @@ class KeyModifier(object):
         all_modifiers.append(Key.ALT)
 
         active_modifiers = []
+        logger.debug('Value %s ' % value)
+        logger.debug('All modifiers %s ' % all_modifiers)
         for item in all_modifiers:
             logger.debug('Item: %s' % item)
+            logger.debug('ItemValue: %s' % item.value)
             if item.value & value:
-                active_modifiers.append(item.label)
+                active_modifiers.append(item.x11key)
         return active_modifiers
 
 
