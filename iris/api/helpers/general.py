@@ -73,15 +73,15 @@ def change_preference(pref_name, value):
         new_tab()
         select_location_bar()
         paste('about:config')
-        type(Key.ENTER)
+        virtual_type(Key.ENTER)
         time.sleep(Settings.UI_DELAY)
 
-        type(Key.SPACE)
+        virtual_type(Key.SPACE)
         time.sleep(Settings.UI_DELAY)
 
         paste(pref_name)
         time.sleep(Settings.UI_DELAY_LONG)
-        type(Key.TAB)
+        virtual_type(Key.TAB)
         time.sleep(Settings.UI_DELAY_LONG)
 
         try:
@@ -94,12 +94,12 @@ def change_preference(pref_name, value):
             logger.debug('Flag is already set to value:' + value)
             return None
         else:
-            type(Key.ENTER)
+            virtual_type(Key.ENTER)
             dialog_box_pattern = Pattern('preference_dialog_icon.png')
             try:
                 wait(dialog_box_pattern, 3)
                 paste(value)
-                type(Key.ENTER)
+                virtual_type(Key.ENTER)
             except FindError:
                 pass
 
@@ -238,7 +238,7 @@ def confirm_close_multiple_tabs():
     try:
         wait(close_all_tabs_button_pattern, 5)
         logger.debug('"Close all tabs" warning popup found.')
-        type(Key.ENTER)
+        virtual_type(Key.ENTER)
     except FindError:
         logger.debug('Couldn\'t find the "Close all tabs" warning popup.')
         pass
@@ -614,15 +614,15 @@ def get_pref_value(pref_name):
     new_tab()
     select_location_bar()
     paste('about:config')
-    type(Key.ENTER)
+    virtual_type(Key.ENTER)
     time.sleep(Settings.UI_DELAY)
 
-    type(Key.SPACE)
+    virtual_type(Key.SPACE)
     time.sleep(Settings.UI_DELAY)
 
     paste(pref_name)
     time.sleep(Settings.UI_DELAY_LONG)
-    type(Key.TAB)
+    virtual_type(Key.TAB)
     time.sleep(Settings.UI_DELAY_LONG)
 
     try:
@@ -645,7 +645,7 @@ def get_support_info():
     new_tab()
     select_location_bar()
     paste('about:support')
-    type(Key.ENTER)
+    virtual_type(Key.ENTER)
     time.sleep(Settings.UI_DELAY)
 
     try:
@@ -673,7 +673,7 @@ def get_telemetry_info():
     new_tab()
 
     paste('about:telemetry')
-    type(Key.ENTER)
+    virtual_type(Key.ENTER)
 
     try:
         wait(raw_json_pattern, 10)
@@ -716,9 +716,9 @@ def key_to_one_off_search(highlighted_pattern, direction='left'):
             max_attempts = 0
         else:
             if direction == 'right':
-                type(Key.RIGHT)
+                virtual_type(Key.RIGHT)
             else:
-                type(Key.LEFT)
+                virtual_type(Key.LEFT)
             max_attempts -= 1
 
 
@@ -770,7 +770,7 @@ def login_site(site_name):
     focus_next_item()
     paste(password)
     focus_next_item()
-    type(Key.ENTER)
+    virtual_type(Key.ENTER)
 
 
 def maximize_window_control(window_type):
@@ -829,10 +829,13 @@ def navigate(url):
     :param url: The string to type into the location bar.
     :return: None.
     """
+
+    logger.debug('navigate')
     try:
         select_location_bar()
         paste(url)
-        type(Key.ENTER)
+        logger.debug('navigate enter')
+        virtual_type(Key.ENTER)
     except Exception:
         raise APIHelperError(
             'No active window found, cannot navigate to page.')
@@ -850,7 +853,7 @@ def navigate_slow(url):
     try:
         select_location_bar()
         Settings.type_delay = 0.1
-        type(url + Key.ENTER)
+        virtual_type(url + Key.ENTER)
     except Exception:
         raise APIHelperError(
             'No active window found, cannot navigate to page.')
@@ -859,33 +862,33 @@ def navigate_slow(url):
 def open_about_firefox():
     """Open the 'About Firefox' window."""
     if Settings.get_os() == Platform.MAC:
-        type(Key.F3, modifier=KeyModifier.CTRL)
-        type(Key.F2, modifier=KeyModifier.CTRL)
+        virtual_type(Key.F3, modifier=KeyModifier.CTRL)
+        virtual_type(Key.F2, modifier=KeyModifier.CTRL)
 
         time.sleep(0.5)
-        type(Key.RIGHT)
-        type(Key.DOWN)
-        type(Key.DOWN)
-        type(Key.ENTER)
+        virtual_type(Key.RIGHT)
+        virtual_type(Key.DOWN)
+        virtual_type(Key.DOWN)
+        virtual_type(Key.ENTER)
 
     elif Settings.get_os() == Platform.WINDOWS:
-        type(Key.ALT)
+        virtual_type(Key.ALT)
         if parse_args().locale != 'ar':
-            type(Key.LEFT)
+            virtual_type(Key.LEFT)
         else:
-            type(Key.RIGHT)
-        type(Key.ENTER)
-        type(Key.UP)
-        type(Key.ENTER)
+            virtual_type(Key.RIGHT)
+        virtual_type(Key.ENTER)
+        virtual_type(Key.UP)
+        virtual_type(Key.ENTER)
 
     else:
-        type(Key.F10)
+        virtual_type(Key.F10)
         if parse_args().locale != 'ar':
-            type(Key.LEFT)
+            virtual_type(Key.LEFT)
         else:
-            type(Key.RIGHT)
-        type(Key.UP)
-        type(Key.ENTER)
+            virtual_type(Key.RIGHT)
+        virtual_type(Key.UP)
+        virtual_type(Key.ENTER)
 
 
 def open_library_menu(option):
@@ -929,13 +932,13 @@ def open_zoom_menu():
         view_menu_pattern = Pattern('view_menu.png')
         click(view_menu_pattern)
         for i in range(3):
-            type(text=Key.DOWN)
-        type(text=Key.ENTER)
+            virtual_type(text=Key.DOWN)
+        virtual_type(text=Key.ENTER)
     else:
-        type(text='v', modifier=KeyModifier.ALT)
+        virtual_type(text='v', modifier=KeyModifier.ALT)
         for i in range(2):
-            type(text=Key.DOWN)
-        type(text=Key.ENTER)
+            virtual_type(text=Key.DOWN)
+        virtual_type(text=Key.ENTER)
 
 
 def restore_window_control(window_type):
@@ -1008,7 +1011,7 @@ def repeat_key_down(num):
     :return: None.
     """
     for i in range(num):
-        type(Key.DOWN)
+        virtual_type(Key.DOWN)
 
 
 def repeat_key_down_until_image_found(image_pattern, num_of_key_down_presses=10, delay_between_presses=3):
@@ -1031,7 +1034,7 @@ def repeat_key_down_until_image_found(image_pattern, num_of_key_down_presses=10,
         if pattern_found:
             break
 
-        type(Key.DOWN)
+        virtual_type(Key.DOWN)
         time.sleep(delay_between_presses)
 
     return pattern_found
@@ -1044,7 +1047,7 @@ def repeat_key_up(num):
     :return: None.
     """
     for i in range(num):
-        type(Key.UP)
+        virtual_type(Key.UP)
 
 
 def repeat_key_up_until_image_found(image_pattern, num_of_key_up_presses=10, delay_between_presses=3):
@@ -1067,7 +1070,7 @@ def repeat_key_up_until_image_found(image_pattern, num_of_key_up_presses=10, del
         if pattern_found:
             break
 
-        type(Key.UP)
+        virtual_type(Key.UP)
         time.sleep(delay_between_presses)
 
     return pattern_found
@@ -1137,7 +1140,7 @@ def restore_window_from_taskbar(option=None):
             raise APIHelperError('Restore window from taskbar unsuccessful.')
 
     else:
-        type(text=Key.TAB, modifier=KeyModifier.ALT)
+        virtual_type(text=Key.TAB, modifier=KeyModifier.ALT)
         if Settings.get_os() == Platform.LINUX:
             hover(Location(0, 50))
     time.sleep(Settings.UI_DELAY)
@@ -1204,12 +1207,12 @@ def select_location_bar_option(option_number):
     """
     if Settings.get_os() == Platform.WINDOWS:
         for i in range(option_number + 1):
-            type(text=Key.DOWN)
-        type(text=Key.ENTER)
+            virtual_type(text=Key.DOWN)
+        virtual_type(text=Key.ENTER)
     else:
         for i in range(option_number - 1):
-            type(text=Key.DOWN)
-        type(text=Key.ENTER)
+            virtual_type(text=Key.DOWN)
+        virtual_type(text=Key.ENTER)
 
 
 def select_zoom_menu_option(option_number):
@@ -1218,8 +1221,8 @@ def select_zoom_menu_option(option_number):
     open_zoom_menu()
 
     for i in range(option_number):
-        type(text=Key.DOWN)
-    type(text=Key.ENTER)
+        virtual_type(text=Key.DOWN)
+    virtual_type(text=Key.ENTER)
 
 
 def wait_for_firefox_restart():

@@ -8,8 +8,8 @@ import time
 from iris.api.core.errors import FindError, APIHelperError
 from iris.api.core.firefox_ui.library_menu import SidebarBookmarks
 from iris.api.core.firefox_ui.location_bar import LocationBar
-from iris.api.core.key import key_down, key_up, type
-from iris.api.core.keyboard.key import KeyModifier, Key
+from iris.api.core.keyboard.Xkeyboard import XKeyboard
+from iris.api.core.keyboard.key import Key, KeyModifier
 from iris.api.core.keyboard.keyboard_manipulation import virtual_type
 from iris.api.core.location import Location
 from iris.api.core.pattern import Pattern
@@ -69,6 +69,7 @@ def open_file_picker():
 
 
 def select_location_bar():
+    logger.debug('select_location_bar I')
     """Set focus to the location bar."""
     if Settings.get_os() == Platform.MAC:
         virtual_type(text='l', modifier=KeyModifier.CMD)
@@ -76,6 +77,7 @@ def select_location_bar():
         virtual_type(text='l', modifier=KeyModifier.CTRL)
     # Wait to allow the location bar to become responsive.
     time.sleep(Settings.UI_DELAY)
+    logger.debug('select_location_bar II')
 
 
 def reload_page():
@@ -422,7 +424,9 @@ def maximize_window():
     """
 
     logger.info('MAXIMIZE WINDOW')
+    from iris.api.core.keyboard.key import Key
     if Settings.is_mac():
+
         # There is no keyboard shortcut for this on Mac. We'll do it the old fashioned way.
         # This image is of the three window control buttons at top left of the window.
         # We have to resize the window to ensure maximize works properly in all cases.
@@ -438,14 +442,15 @@ def maximize_window():
         # Alt key changes maximize button from full screen to maximize window.
         maximize_button = window_controls_pattern.target_offset(width - 3, height / 2)
         logger.info(': %s' % maximize_button)
-        from iris.api.core.keyboard import Xkeyboard
-        Xkeyboard.keyDown(Key.ALT)
+        fake_Keyboard = XKeyboard()
+        fake_Keyboard.keyDown(Key.ALT)
         click(maximize_button)
-        Xkeyboard.keyUp(Key.ALT)
+        fake_Keyboard.keyUp(Key.ALT)
 
     elif Settings.is_windows():
         virtual_type(text=Key.UP, modifier=KeyModifier.WIN)
     else:
+
         virtual_type(text=Key.UP, modifier=KeyModifier.CTRL + KeyModifier.META)
     # Wait to allow window to be maximized.
     time.sleep(Settings.UI_DELAY)

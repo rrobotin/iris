@@ -23,7 +23,9 @@ def virtual_type(text=None, modifier=None, interval=None):
     :return: None.
     """
 
-    logger.debug('text : %s' % text)
+    logger.debug('start virtual type')
+    logger.debug('text :')
+    logger.debug(text)
     logger.debug(type(text))
 
     logger.debug('modifier : %s' % modifier)
@@ -41,15 +43,17 @@ def virtual_type(text=None, modifier=None, interval=None):
                 interval = Settings.type_delay
 
             logger.debug('Scenario 2: normal key or text block.')
-            logger.debug('Text: %s' % text)
-            XKeyboard.typewrite(text, interval)
+            logger.debug('text :')
+            logger.debug(text)
+            XKeyboard.type_write(text, interval)
     else:
         logger.debug('Scenario 3: combination of modifiers and other keys.')
 
         modifier_keys = KeyModifier.get_active_modifiers(modifier)
         num_keys = len(modifier_keys)
         logger.debug('Modifiers (%s): %s ' % (num_keys, ' '.join(modifier_keys)))
-        logger.debug('text: %s' % text)
+        logger.debug('text :')
+        logger.debug(text)
         if num_keys == 1:
             fake_Keyboard.keyDown(str(modifier_keys[0]))
             time.sleep(DEFAULT_KEY_SHORTCUT_DELAY)
@@ -75,6 +79,8 @@ def virtual_type(text=None, modifier=None, interval=None):
 
     if Settings.type_delay != DEFAULT_TYPE_DELAY:
         Settings.type_delay = DEFAULT_TYPE_DELAY
+
+    logger.debug('END virtual type')
 
 
 def new_tab_virtual():

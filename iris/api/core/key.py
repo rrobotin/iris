@@ -11,6 +11,7 @@ import pyautogui
 import pyperclip
 
 from errors import FindError
+from iris.api.core.keyboard.keyboard_manipulation import virtual_type
 from platform import Platform
 from settings import Settings, DEFAULT_TYPE_DELAY
 from util.core_helper import INVALID_GENERIC_INPUT, IrisCore
@@ -362,7 +363,7 @@ def paste(text):
     :param text: Text to be pasted.
     :return: None.
     """
-
+    logger.debug('paste I')
     # Load text to clipboard.
     pyperclip.copy(text)
 
@@ -383,12 +384,13 @@ def paste(text):
         raise FindError('Paste method failed.')
 
     if Settings.get_os() == Platform.MAC:
-        type(text='v', modifier=KeyModifier.CMD)
+        virtual_type(text='v', modifier=KeyModifier.CMD)
     else:
-        type(text='v', modifier=KeyModifier.CTRL)
+        virtual_type(text='v', modifier=KeyModifier.CTRL)
 
     # Clear clipboard.
     pyperclip.copy('')
+    logger.debug('paste II')
 
 
 def check_keyboard_state():

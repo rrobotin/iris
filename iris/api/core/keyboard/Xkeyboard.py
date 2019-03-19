@@ -20,7 +20,9 @@ class XKeyboard(object):
         self.display = Display(os.environ['DISPLAY'])
 
     def keyDown(self, key):
-        logger.info('KEY DOWN')
+        logger.info('KEY_DOWN')
+        logger.debug('KEY :')
+        logger.debug(key)
         """
         Performs a keyboard key press without the release. This will put that
         key in a held down state.
@@ -32,9 +34,12 @@ class XKeyboard(object):
         Returns:
           None
         """
+
+        logger.debug('I type(key) %s: ' % type(key))
         if self.keyboardMapping(key) is None:
             return
 
+        logger.debug('II type(key) %s: ' % type(key))
         if type(key) == int:
             fake_input(self.display, X.KeyPress, key)
             self.display.sync()
@@ -51,7 +56,9 @@ class XKeyboard(object):
         self.display.sync()
 
     def keyUp(self, key):
-        logger.info('KEY UP')
+        logger.info('KEY_UP')
+        logger.debug('KEY :')
+        logger.debug(key)
         """
         Performs a keyboard key release (without the press down beforehand).
     
@@ -63,10 +70,11 @@ class XKeyboard(object):
           None
         """
 
+        logger.debug('I type(key) %s: ' % type(key))
         if self.keyboardMapping(key) is None:
             return
 
-        logger.debug('type(key) %s: ' % type(key))
+        logger.debug('II type(key) %s: ' % type(key))
         if type(key) == int:
             keycode = key
         else:
@@ -79,6 +87,7 @@ class XKeyboard(object):
 
     def keyboardMapping(self, iriskey):
         logger.debug('keyboardMapping')
+        logger.debug(Xlib.XK.string_to_keysym(iriskey))
         return self.display.keysym_to_keycode(Xlib.XK.string_to_keysym(iriskey))
 
     def _screen_size(self):

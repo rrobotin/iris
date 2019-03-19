@@ -27,7 +27,7 @@ class Test(BaseTest):
         expected_1 = exists(LocalWeb.MOZILLA_LOGO, 10)
         assert_true(self, expected_1, 'Mozilla page loaded successfully.')
 
-        #new_tab_virtual()
+        new_tab_virtual()
         navigate(LocalWeb.FIREFOX_TEST_SITE)
         expected_2 = exists(LocalWeb.FIREFOX_LOGO, 10)
         assert_true(self, expected_2, 'Firefox page loaded successfully.')
@@ -48,15 +48,20 @@ class Test(BaseTest):
 
         else:
             for i in range(4):
+                from iris.api.core.keyboard.key import Key
                 virtual_type(Key.DOWN)
 
+        logger.debug('TAB')
         virtual_type(Key.TAB)
+        logger.debug('TAB')
         virtual_type(Key.TAB)
         for i in range(5):
             virtual_type(Key.DOWN)
+        logger.debug('SPACE')
         virtual_type(Key.SPACE)
         virtual_type(Key.DOWN)
         virtual_type(Key.SPACE)
+        logger.debug('ENTER')
         virtual_type(Key.ENTER)
 
         # Sometimes Firefox is in a state where it can't receive keyboard input
