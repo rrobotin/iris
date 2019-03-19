@@ -47,8 +47,8 @@ class Key(object):
     CTRL = _IrisKey('ctrl', 1 << 1, 'Control_L')
     DELETE = _IrisKey('del', None, 'Delete')
     DIVIDE = _IrisKey('divide', None, 'KP_Divide')
-    DOWN = _IrisKey('down', None, 'Down')
-    ENTER = _IrisKey('\n', None, 'Return')
+    DOWN = _IrisKey('Down', None, 'Down')
+    ENTER = _IrisKey('Return', None, 'Return')
     END = _IrisKey('end', None, 'End')
     ESC = _IrisKey('esc', None, 'Escape')
     F1 = _IrisKey('f1', None, 'F1')
@@ -91,9 +91,9 @@ class Key(object):
     SCROLL_LOCK = _IrisKey('scrolllock', None, 'Scroll_Lock')
     SEPARATOR = _IrisKey('separator', None, 'KP_Separator')
     SHIFT = _IrisKey('shift', 1 << 0, 'Shift_L')
-    SPACE = _IrisKey(' ', None, 'space')
-    TAB = _IrisKey('\t', None, 'Tab')
-    UP = _IrisKey('up', None, 'Up')
+    SPACE = _IrisKey('space', None, 'space')
+    TAB = _IrisKey('Tab', None, 'Tab')
+    UP = _IrisKey('Up', None, 'Up')
     WIN = _IrisKey('win', 1 << 2)
 
     """Additional keys."""
