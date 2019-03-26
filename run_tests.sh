@@ -1,7 +1,7 @@
 #!/bin/bash
 echo -e "PWD #####\n"
 pwd
-cd ~/mozilla/iris
+cd ~/rrobotin/iris2
 echo -e "PWD #####\n"
 pwd
 export DISPLAY=:99.0
